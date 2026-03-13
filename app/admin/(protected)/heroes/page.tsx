@@ -42,7 +42,7 @@ export default function HeroesAdminPage() {
   const [saving, setSaving] = useState(false);
 
   const fetchHeroes = useCallback(async () => {
-    const res = await fetch("/api/heroes");
+    const res = await fetch("/api/heroes?all=true");
     const data = await res.json();
     setHeroes(data);
     setLoading(false);
