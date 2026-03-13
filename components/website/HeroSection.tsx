@@ -11,9 +11,10 @@ interface HeroSectionProps {
   androidLink?: string;
   gameNameZh?: string;
   gameNameEn?: string;
+  heroes?: { imageUrl: string; nameEn: string; nameZh: string }[];
 }
 
-const heroImages = [
+const FALLBACK_IMAGES = [
   { src: "/art/characters/亚历山大.png", name: "Alexander" },
   { src: "/art/characters/秦始皇-临时.png", name: "Qin Shi Huang" },
   { src: "/art/characters/布迪卡-带英雄.png", name: "Boudica" },
@@ -30,7 +31,11 @@ interface Particle {
   maxLife: number;
 }
 
-export default function HeroSection({ locale, iosLink = "", androidLink = "", gameNameZh = "烬火王冠", gameNameEn = "Cinder & Crown" }: HeroSectionProps) {
+export default function HeroSection({ locale, iosLink = "", androidLink = "", gameNameZh = "烬火王冠", gameNameEn = "Cinder & Crown", heroes }: HeroSectionProps) {
+  const heroImages = heroes && heroes.length > 0
+    ? heroes.map((h) => ({ src: h.imageUrl, name: h.nameEn }))
+    : FALLBACK_IMAGES;
+
   const [currentHero, setCurrentHero] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -39,6 +44,7 @@ export default function HeroSection({ locale, iosLink = "", androidLink = "", ga
 
   // Hero image rotation
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const interval = setInterval(() => {
       setIsTransitioning(true);
       setTimeout(() => {
@@ -47,10 +53,11 @@ export default function HeroSection({ locale, iosLink = "", androidLink = "", ga
       }, 600);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [heroImages.length]);
 
   // Particle animation
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");

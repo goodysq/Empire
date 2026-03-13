@@ -4,7 +4,9 @@ import Navbar from "@/components/website/Navbar";
 import Footer from "@/components/website/Footer";
 import { BackButton } from "@/components/website/BackButton";
 import { toTraditional } from "@/lib/opencc";
+import { sanitize } from "@/lib/sanitize";
 import { Tag, BookOpen } from "lucide-react";
+import type { SiteSetting } from "@/lib/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +24,7 @@ export default async function GuideDetailPage({ params }: Props) {
 
   if (!guide || !guide.isVisible) notFound();
 
-  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+  const gs = (key: string) => allSettings.find((s: SiteSetting) => s.key === key)?.value ?? "";
   const logoUrl = gs("logo_url");
   const gameNameZh = gs("game_name_zh");
   const gameNameEn = gs("game_name_en");
@@ -95,7 +97,7 @@ export default async function GuideDetailPage({ params }: Props) {
           {content ? (
             <div
               className="article-content text-[#B8A882] leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: content }}
+              dangerouslySetInnerHTML={{ __html: sanitize(content) }}
             />
           ) : (
             <div className="article-content text-[#B8A882] leading-relaxed">

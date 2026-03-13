@@ -1,32 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { requireAuth } from "@/lib/api-auth";
 
 export async function GET() {
-  const sections = await prisma.pageSection.findMany({
-    orderBy: { order: "asc" },
-  });
-  return NextResponse.json(sections);
+  try {
+    const sections = await prisma.pageSection.findMany({
+      orderBy: { order: "asc" },
+    });
+    return NextResponse.json(sections);
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const { error } = await requireAuth();
+  if (error) return error;
 
-  // Get the max order value to append at the end
-  const last = await prisma.pageSection.findFirst({
-    orderBy: { order: "desc" },
-  });
-  const nextOrder = (last?.order ?? -1) + 1;
+  try {
+    const body = await req.json();
 
-  const section = await prisma.pageSection.create({
-    data: {
-      key: body.key,
-      titleZh: body.titleZh ?? "",
-      titleEn: body.titleEn ?? "",
-      isVisible: body.isVisible ?? true,
-      isLocked: false,
-      order: nextOrder,
-    },
-  });
+    if (!body.key) {
+      return NextResponse.json({ error: "key is required" }, { status: 400 });
+    }
 
-  return NextResponse.json(section, { status: 201 });
+    const last = await prisma.pageSection.findFirst({
+      orderBy: { order: "desc" },
+    });
+    const nextOrder = (last?.order ?? -1) + 1;
+
+    const section = await prisma.pageSection.create({
+      data: {
+        key: body.key,
+        titleZh: body.titleZh ?? "",
+        titleEn: body.titleEn ?? "",
+        isVisible: body.isVisible ?? true,
+        isLocked: false,
+        order: nextOrder,
+      },
+    });
+
+    return NextResponse.json(section, { status: 201 });
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }

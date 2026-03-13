@@ -112,6 +112,7 @@ export default function GuidesSection({
   subtitleEn,
 }: GuidesSectionProps) {
   const [visible, setVisible] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -132,6 +133,14 @@ export default function GuidesSection({
   const visibleGuides = guides.filter((g) => g.isVisible);
   if (visibleGuides.length === 0) return null;
 
+  // Build unique category list from available guides
+  const categories = Array.from(
+    new Set(visibleGuides.map((g) => g.category).filter(Boolean) as string[])
+  );
+  const filteredGuides = activeCategory
+    ? visibleGuides.filter((g) => g.category === activeCategory)
+    : visibleGuides;
+
   return (
     <section id="guides" ref={ref} className="relative py-20 lg:py-28 bg-[#0A0806] overflow-hidden">
       {/* Background decoration */}
@@ -144,7 +153,7 @@ export default function GuidesSection({
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className={`text-center mb-14 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className={`text-center mb-10 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#C9A84C]" />
             <span className="text-[#C9A84C] text-sm font-medium tracking-[0.3em] uppercase flex items-center gap-1.5">
@@ -162,13 +171,46 @@ export default function GuidesSection({
           <p className="text-[#B8A882] text-lg max-w-2xl mx-auto">{subtitle}</p>
         </div>
 
+        {/* Category filter — only shown when there are multiple categories */}
+        {categories.length > 1 && (
+          <div className={`flex flex-wrap justify-center gap-2 mb-10 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+            <button
+              onClick={() => setActiveCategory(null)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200 ${
+                activeCategory === null
+                  ? "bg-[#C9A84C] text-[#0A0806] border-[#C9A84C]"
+                  : "text-[#B8A882] border-[#C9A84C]/30 hover:border-[#C9A84C]/60 hover:text-[#E8C96A]"
+              }`}
+            >
+              {loc(locale, "全部", "全部", "All")}
+            </button>
+            {categories.map((cat) => {
+              const catStyle = CAT_COLORS[cat] ?? defaultCat;
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(isActive ? null : cat)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200 ${
+                    isActive
+                      ? `${catStyle.bg} ${catStyle.text} ${catStyle.border}`
+                      : "text-[#B8A882] border-[#C9A84C]/30 hover:border-[#C9A84C]/60 hover:text-[#E8C96A]"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {/* Guide cards grid */}
         <div
           className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-700 delay-200 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {visibleGuides.map((guide, i) => (
+          {filteredGuides.map((guide, i) => (
             <GuideCard key={guide.id} guide={guide} locale={locale} index={i} />
           ))}
         </div>

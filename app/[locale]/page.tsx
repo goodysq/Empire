@@ -10,6 +10,7 @@ import CustomSectionBlock from "@/components/website/CustomSectionBlock";
 import Footer from "@/components/website/Footer";
 import { prisma } from "@/lib/db";
 import { toTraditional } from "@/lib/opencc";
+import type { SiteSetting, PageSection, News, Guide } from "@/lib/generated/prisma/client";
 
 // System section keys — have dedicated components
 const SYSTEM_KEYS = new Set([
@@ -41,7 +42,7 @@ export default async function HomePage({
       prisma.pageSection.findUnique({ where: { key: "guides" } }),
     ]);
 
-  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+  const gs = (key: string) => allSettings.find((s: SiteSetting) => s.key === key)?.value ?? "";
 
   const iosLink = gs("ios_link");
   const androidLink = gs("android_link");
@@ -60,12 +61,12 @@ export default async function HomePage({
   };
 
   const customNavSections = allSections.filter(
-    (s) => !SYSTEM_KEYS.has(s.key) && s.showInNav
+    (s: PageSection) => !SYSTEM_KEYS.has(s.key) && s.showInNav
   );
 
   const convertedNews =
     locale === "zh-TW"
-      ? news.map((n) => ({
+      ? news.map((n: News) => ({
           ...n,
           titleZh: toTraditional(n.titleZh, locale),
           excerptZh: toTraditional(n.excerptZh, locale),
@@ -74,7 +75,7 @@ export default async function HomePage({
 
   const convertedGuides =
     locale === "zh-TW"
-      ? guides.map((g) => ({
+      ? guides.map((g: Guide) => ({
           ...g,
           titleZh: toTraditional(g.titleZh, locale),
           excerptZh: toTraditional(g.excerptZh ?? "", locale),
@@ -83,10 +84,10 @@ export default async function HomePage({
       : guides;
 
   // All sections ordered by DB; system keys map to their components
-  const renderedSections = allSections.map((section) => {
+  const renderedSections = allSections.map((section: PageSection) => {
     switch (section.key) {
       case "hero":
-        return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />;
+        return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} gameNameZh={gameNameZh} gameNameEn={gameNameEn} heroes={heroes} />;
       case "features":
         return <FeaturesSection key="features" locale={locale} />;
       case "heroes_gallery":
@@ -137,7 +138,7 @@ export default async function HomePage({
         gameNameZh={gameNameZh}
         gameNameEn={gameNameEn}
         navItems={navItems}
-        customNavSections={customNavSections.map((s) => ({
+        customNavSections={customNavSections.map((s: PageSection) => ({
           key: s.key,
           labelZh: s.titleZh || s.key,
           labelEn: s.titleEn || s.key,

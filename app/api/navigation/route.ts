@@ -1,48 +1,87 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { requireAuth } from "@/lib/api-auth";
 
 export async function GET() {
-  const items = await prisma.navItem.findMany({
-    orderBy: { order: "asc" },
-  });
-  return NextResponse.json(items);
+  try {
+    const items = await prisma.navItem.findMany({
+      orderBy: { order: "asc" },
+    });
+    return NextResponse.json(items);
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const { error } = await requireAuth();
+  if (error) return error;
 
-  const item = await prisma.navItem.create({
-    data: {
-      labelZh: body.labelZh,
-      labelEn: body.labelEn,
-      href: body.href,
-      order: body.order ?? 0,
-      isVisible: body.isVisible ?? true,
-    },
-  });
+  try {
+    const body = await req.json();
 
-  return NextResponse.json(item, { status: 201 });
+    if (!body.labelZh || !body.href) {
+      return NextResponse.json({ error: "labelZh and href are required" }, { status: 400 });
+    }
+
+    const item = await prisma.navItem.create({
+      data: {
+        labelZh: body.labelZh,
+        labelEn: body.labelEn,
+        href: body.href,
+        order: body.order ?? 0,
+        isVisible: body.isVisible ?? true,
+      },
+    });
+
+    return NextResponse.json(item, { status: 201 });
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
 export async function PUT(req: NextRequest) {
-  const body = await req.json();
+  const { error } = await requireAuth();
+  if (error) return error;
 
-  const item = await prisma.navItem.update({
-    where: { id: body.id },
-    data: {
-      labelZh: body.labelZh,
-      labelEn: body.labelEn,
-      href: body.href,
-      order: body.order,
-      isVisible: body.isVisible,
-    },
-  });
+  try {
+    const body = await req.json();
 
-  return NextResponse.json(item);
+    if (!body.id) {
+      return NextResponse.json({ error: "id is required" }, { status: 400 });
+    }
+
+    const item = await prisma.navItem.update({
+      where: { id: body.id },
+      data: {
+        labelZh: body.labelZh,
+        labelEn: body.labelEn,
+        href: body.href,
+        order: body.order,
+        isVisible: body.isVisible,
+      },
+    });
+
+    return NextResponse.json(item);
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
 export async function DELETE(req: NextRequest) {
-  const body = await req.json();
-  await prisma.navItem.delete({ where: { id: body.id } });
-  return NextResponse.json({ success: true });
+  const { error } = await requireAuth();
+  if (error) return error;
+
+  try {
+    const body = await req.json();
+
+    if (!body.id) {
+      return NextResponse.json({ error: "id is required" }, { status: 400 });
+    }
+
+    await prisma.navItem.delete({ where: { id: body.id } });
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }

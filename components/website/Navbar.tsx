@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, Globe, ChevronDown } from "lucide-react";
+import { loc } from "@/lib/loc";
 
 interface NavbarProps {
   locale: string;
@@ -225,7 +226,7 @@ export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn, navIte
 
           {/* Language options in mobile */}
           <div className="pt-2 border-t border-[#C9A84C]/20">
-            <p className="text-[#B8A882]/50 text-xs mb-2 uppercase tracking-wider">语言 / Language</p>
+            <p className="text-[#B8A882]/50 text-xs mb-2 uppercase tracking-wider">{loc(locale, "语言 / Language", "語言 / Language", "Language")}</p>
             <div className="flex gap-2">
               {LOCALES.map((l) => (
                 <button

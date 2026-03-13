@@ -42,6 +42,12 @@ next-env.d.ts
 
 /app/generated/prisma
 
+# Prisma generated client (regenerated via prisma generate)
+/lib/generated/prisma
+
+# Platform-specific native binaries
+*.node
+
 # SQLite database (contains runtime data, not source code)
 *.db
 *.db-journal

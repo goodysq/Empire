@@ -2,8 +2,10 @@ import { prisma } from "@/lib/db";
 import Navbar from "@/components/website/Navbar";
 import Footer from "@/components/website/Footer";
 import { toTraditional } from "@/lib/opencc";
+import { sanitize } from "@/lib/sanitize";
 import { loc as locFn } from "@/lib/loc";
 import Link from "next/link";
+import type { SiteSetting, PageSection } from "@/lib/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +30,7 @@ export default async function SupportPage({
     prisma.siteSetting.findMany(),
   ]);
 
-  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+  const gs = (key: string) => allSettings.find((s: SiteSetting) => s.key === key)?.value ?? "";
 
   const iosLink = gs("ios_link");
   const androidLink = gs("android_link");
@@ -48,7 +50,7 @@ export default async function SupportPage({
 
   // Build content map
   const contentMap = Object.fromEntries(
-    pageSections.map((s) => [s.key, s])
+    pageSections.map((s: PageSection) => [s.key, s])
   );
 
   function getTitle(key: string, section: (typeof sections)[0]) {
@@ -129,7 +131,7 @@ export default async function SupportPage({
                       prose-a:text-[#C9A84C] prose-a:no-underline hover:prose-a:underline
                       prose-strong:text-[#F5EDD5] prose-li:text-[#B8A882]/80
                       prose-hr:border-[#C9A84C]/20"
-                    dangerouslySetInnerHTML={{ __html: content }}
+                    dangerouslySetInnerHTML={{ __html: sanitize(content) }}
                   />
                 ) : (
                   <div className="text-[#B8A882]/30 text-sm italic border border-dashed border-[#C9A84C]/10 rounded-xl p-8 text-center">

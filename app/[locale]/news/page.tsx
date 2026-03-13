@@ -6,31 +6,43 @@ import Footer from "@/components/website/Footer";
 import { toTraditional } from "@/lib/opencc";
 import { Calendar, Tag, ArrowLeft } from "lucide-react";
 import { routing } from "@/i18n/routing";
+import type { SiteSetting, News } from "@/lib/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
+const PAGE_SIZE = 12;
+
 interface Props {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
-export default async function NewsListPage({ params }: Props) {
+export default async function NewsListPage({ params, searchParams }: Props) {
   const { locale } = await params;
+  const { page: pageParam } = await searchParams;
 
   if (!routing.locales.includes(locale as "zh" | "zh-TW" | "en")) {
     notFound();
   }
 
+  const currentPage = Math.max(1, parseInt(pageParam || "1", 10));
+
   const zh = locale !== "en";
 
-  const [articles, allSettings] = await Promise.all([
+  const [totalCount, articles, allSettings] = await Promise.all([
+    prisma.news.count({ where: { isPublished: true } }),
     prisma.news.findMany({
       where: { isPublished: true },
       orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+      skip: (currentPage - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
     }),
     prisma.siteSetting.findMany(),
   ]);
 
-  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+  const gs = (key: string) => allSettings.find((s: SiteSetting) => s.key === key)?.value ?? "";
   const logoUrl = gs("logo_url");
   const gameNameZh = gs("game_name_zh");
   const gameNameEn = gs("game_name_en");
@@ -92,7 +104,7 @@ export default async function NewsListPage({ params }: Props) {
             <p className="text-[#B8A882] text-center py-20">{emptyLabel}</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {articles.map((article) => {
+              {articles.map((article: News) => {
                 const title =
                   locale === "en"
                     ? (article.titleEn ?? article.titleZh)
@@ -161,6 +173,41 @@ export default async function NewsListPage({ params }: Props) {
                   </Link>
                 );
               })}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-12">
+              {currentPage > 1 && (
+                <Link
+                  href={`/${locale}/news?page=${currentPage - 1}`}
+                  className="px-4 py-2 text-sm border border-[#C9A84C]/30 text-[#B8A882] rounded-lg hover:border-[#C9A84C]/60 hover:text-[#E8C96A] transition-colors"
+                >
+                  {locale === "en" ? "← Prev" : "← 上一页"}
+                </Link>
+              )}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <Link
+                  key={p}
+                  href={`/${locale}/news?page=${p}`}
+                  className={`w-9 h-9 flex items-center justify-center text-sm rounded-lg border transition-colors ${
+                    p === currentPage
+                      ? "bg-[#C9A84C] text-[#0A0806] border-[#C9A84C] font-bold"
+                      : "border-[#C9A84C]/30 text-[#B8A882] hover:border-[#C9A84C]/60 hover:text-[#E8C96A]"
+                  }`}
+                >
+                  {p}
+                </Link>
+              ))}
+              {currentPage < totalPages && (
+                <Link
+                  href={`/${locale}/news?page=${currentPage + 1}`}
+                  className="px-4 py-2 text-sm border border-[#C9A84C]/30 text-[#B8A882] rounded-lg hover:border-[#C9A84C]/60 hover:text-[#E8C96A] transition-colors"
+                >
+                  {locale === "en" ? "Next →" : "下一页 →"}
+                </Link>
+              )}
             </div>
           )}
         </div>

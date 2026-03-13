@@ -261,7 +261,11 @@ export default function Footer({
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-[#B8A882]/40 text-xs text-center sm:text-left">
-            {loc(locale, "© 2024 帝国纪元. 保留所有权利.", "© 2024 帝國紀元. 保留所有權利.", "© 2024 Empire Chronicles. All rights reserved.")}
+            {loc(locale,
+              `© ${new Date().getFullYear()} 帝国纪元. 保留所有权利.`,
+              `© ${new Date().getFullYear()} 帝國紀元. 保留所有權利.`,
+              `© ${new Date().getFullYear()} Empire Chronicles. All rights reserved.`
+            )}
           </p>
         </div>
       </div>

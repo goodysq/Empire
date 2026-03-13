@@ -10,6 +10,8 @@ interface Hero {
   nameEn: string;
   titleZh?: string;
   titleEn?: string;
+  descZh?: string;
+  descEn?: string;
   faction?: string;
   imageUrl: string;
   isVisible: boolean;
@@ -27,6 +29,8 @@ const defaultHero: Omit<Hero, "id"> = {
   nameEn: "",
   titleZh: "",
   titleEn: "",
+  descZh: "",
+  descEn: "",
   faction: "asia",
   imageUrl: "",
   isVisible: true,
@@ -246,6 +250,24 @@ export default function HeroesAdminPage() {
                     className="w-full px-3 py-2 bg-[#0F1117] border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:border-[#C9A84C]"
                   />
                 </div>
+              </div>
+              <div>
+                <label className="block text-gray-300 text-sm mb-1.5">中文简介</label>
+                <textarea
+                  value={editingHero.descZh || ""}
+                  onChange={(e) => setEditingHero({ ...editingHero, descZh: e.target.value })}
+                  rows={2}
+                  className="w-full px-3 py-2 bg-[#0F1117] border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:border-[#C9A84C] resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-300 text-sm mb-1.5">英文简介</label>
+                <textarea
+                  value={editingHero.descEn || ""}
+                  onChange={(e) => setEditingHero({ ...editingHero, descEn: e.target.value })}
+                  rows={2}
+                  className="w-full px-3 py-2 bg-[#0F1117] border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:border-[#C9A84C] resize-none"
+                />
               </div>
               <div>
                 <label className="block text-gray-300 text-sm mb-1.5">阵营</label>

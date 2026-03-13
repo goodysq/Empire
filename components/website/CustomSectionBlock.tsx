@@ -1,4 +1,5 @@
 import { toTraditional } from "@/lib/opencc";
+import { sanitize } from "@/lib/sanitize";
 
 interface CustomSectionBlockProps {
   sectionKey: string;
@@ -87,7 +88,7 @@ export default function CustomSectionBlock({
                     "--tw-prose-headings": "#E8C96A",
                     "--tw-prose-links": "#C9A84C",
                   } as React.CSSProperties}
-                  dangerouslySetInnerHTML={{ __html: content }}
+                  dangerouslySetInnerHTML={{ __html: sanitize(content) }}
                 />
               </div>
             )}
