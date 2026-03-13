@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 import { BookOpen, ArrowRight, Tag } from "lucide-react";
 
 interface Guide {
@@ -41,8 +42,9 @@ function GuideCard({ guide, locale, index }: { guide: Guide; locale: string; ind
   const cat = guide.category ? (CAT_COLORS[guide.category] ?? defaultCat) : null;
 
   return (
-    <div
-      className="group relative rounded-2xl overflow-hidden cursor-pointer bg-[#111318] border border-gray-800/60 hover:border-[#C9A84C]/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#C9A84C]/10"
+    <Link
+      href={`/${locale}/guides/${guide.id}`}
+      className="group relative rounded-2xl overflow-hidden bg-[#111318] border border-gray-800/60 hover:border-[#C9A84C]/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#C9A84C]/10 block"
       style={{ animationDelay: `${index * 80}ms` }}
     >
       {/* Cover image */}
@@ -96,7 +98,7 @@ function GuideCard({ guide, locale, index }: { guide: Guide; locale: string; ind
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{ background: "linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.04) 100%)" }}
       />
-    </div>
+    </Link>
   );
 }
 

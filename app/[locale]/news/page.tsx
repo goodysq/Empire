@@ -22,10 +22,18 @@ export default async function NewsListPage({ params }: Props) {
 
   const zh = locale !== "en";
 
-  const articles = await prisma.news.findMany({
-    where: { isPublished: true },
-    orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
-  });
+  const [articles, allSettings] = await Promise.all([
+    prisma.news.findMany({
+      where: { isPublished: true },
+      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+    }),
+    prisma.siteSetting.findMany(),
+  ]);
+
+  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+  const logoUrl = gs("logo_url");
+  const gameNameZh = gs("game_name_zh");
+  const gameNameEn = gs("game_name_en");
 
   const formatDate = (d: Date) => {
     if (locale === "en") {
@@ -45,7 +53,7 @@ export default async function NewsListPage({ params }: Props) {
 
   return (
     <div className="bg-[#0A0806] min-h-screen">
-      <Navbar locale={locale} />
+      <Navbar locale={locale} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
 
       <main className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -158,7 +166,7 @@ export default async function NewsListPage({ params }: Props) {
         </div>
       </main>
 
-      <Footer locale={locale} />
+      <Footer locale={locale} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
     </div>
   );
 }

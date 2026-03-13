@@ -16,9 +16,17 @@ export default async function NewsDetailPage({ params }: Props) {
   const { locale, id } = await params;
   const zh = locale !== "en";
 
-  const article = await prisma.news.findUnique({ where: { id } });
+  const [article, allSettings] = await Promise.all([
+    prisma.news.findUnique({ where: { id } }),
+    prisma.siteSetting.findMany(),
+  ]);
 
   if (!article || !article.isPublished) notFound();
+
+  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+  const logoUrl = gs("logo_url");
+  const gameNameZh = gs("game_name_zh");
+  const gameNameEn = gs("game_name_en");
 
   const title =
     locale === "en"
@@ -46,7 +54,7 @@ export default async function NewsDetailPage({ params }: Props) {
 
   return (
     <div className="bg-[#0A0806] min-h-screen">
-      <Navbar locale={locale} />
+      <Navbar locale={locale} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
 
       <main className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
@@ -103,7 +111,7 @@ export default async function NewsDetailPage({ params }: Props) {
         </div>
       </main>
 
-      <Footer locale={locale} />
+      <Footer locale={locale} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
     </div>
   );
 }
