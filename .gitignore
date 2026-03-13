@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/app/generated/prisma
+
+# SQLite database (contains runtime data, not source code)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Claude Code internal files
+.claude/
+
+# Uploaded media files (large binaries)
+/public/uploads/

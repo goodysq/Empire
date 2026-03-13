@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "heroes": "英雄",
+    "world": "世界觀",
+    "news": "資訊",
+    "download": "下載",
+    "language": "繁"
+  },
+  "hero": {
+    "title": "帝國紀元",
+    "subtitle": "縱橫千古，逐鹿天下",
+    "description": "集結歷史上最偉大的英雄，建立不朽的帝國。聯合盟友，征服世界，書寫屬於你的史詩傳奇。",
+    "downloadAppStore": "App Store 下載",
+    "downloadGooglePlay": "Google Play 下載",
+    "scrollDown": "向下滾動"
+  },
+  "features": {
+    "title": "遊戲特色",
+    "subtitle": "五大核心優勢，打造極致帝國體驗",
+    "social": {
+      "title": "強社交",
+      "subtitle": "聯盟系統",
+      "desc": "與全球玩家組建強大聯盟，共同制定戰略，協同作戰，在史詩級聯盟戰爭中書寫傳奇。"
+    },
+    "heroes": {
+      "title": "豐富英雄",
+      "subtitle": "跨時空歷史人物",
+      "desc": "匯聚亞歷山大、秦始皇、布迪卡等13位跨越時空的歷史英雄，每位英雄擁有獨特技能與專屬故事。"
+    },
+    "relief": {
+      "title": "玩法減負",
+      "subtitle": "協同發展",
+      "desc": "智能輔助系統減少重複操作，讓你專注於戰略佈局與英雄培養，享受純粹的策略樂趣。"
+    },
+    "season": {
+      "title": "賽季制",
+      "subtitle": "賽季輪回",
+      "desc": "獨特賽季機制確保每個賽季都有全新的戰略格局，排行榜競爭激烈，讓帝國征途永遠保持新鮮感。"
+    },
+    "fair": {
+      "title": "公平競技",
+      "subtitle": "策略為王",
+      "desc": "深度策略體系讓智慧超越氪金，合理的資源分配讓每位玩家都能憑藉戰略獲得公平競爭機會。"
+    }
+  },
+  "heroes": {
+    "title": "傳奇英雄",
+    "subtitle": "跨越時空，群雄薈萃",
+    "filterAll": "全部",
+    "filterAsia": "亞洲",
+    "filterEurope": "歐洲",
+    "filterMiddleEast": "中東"
+  },
+  "world": {
+    "title": "聯盟世界",
+    "subtitle": "四大文明圈，史詩戰場",
+    "eastAsia": {
+      "name": "東亞",
+      "desc": "巍峨的東方帝國，秦漢文明的發源地。宏偉的長城橫亙千里，蜿蜒的運河連通南北。這片土地孕育了無數英雄豪傑，等待你來率領他們建立不朽功業。"
+    },
+    "europe": {
+      "name": "歐洲",
+      "desc": "古希臘與羅馬的榮光在此延續，凱爾特勇士與維京海盜在這片土地上留下了永恆的傳說。組建你的歐洲聯盟，征服這片孕育了無數偉大文明的土地。"
+    },
+    "middleEast": {
+      "name": "中東",
+      "desc": "美索不達米亞的肥沃新月地帶，絲綢之路的十字路口。波斯帝國的輝煌與迦太基的海上霸權在此交匯，等待新的征服者書寫新的歷史。"
+    },
+    "atlantis": {
+      "name": "亞特蘭提斯",
+      "desc": "傳說中消失的神秘大陸重現於世，古老的魔法與失落的科技在此共存。探索這片未知的疆域，發現前所未有的寶藏與挑戰，書寫帝國最輝煌的篇章。"
+    }
+  },
+  "news": {
+    "title": "最新資訊",
+    "subtitle": "帝國動態，即時更新",
+    "viewMore": "查看更多",
+    "category": {
+      "update": "版本更新",
+      "event": "活動公告",
+      "story": "世界觀"
+    }
+  },
+  "download": {
+    "title": "立即開始征途",
+    "subtitle": "開啟史詩征程",
+    "desc": "加入全球數百萬玩家，在帝國紀元中建立你的傳奇帝國。立即下載，開啟史詩征程！",
+    "downloadOn": "下載於",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "scanQR": "掃碼下載"
+  },
+  "footer": {
+    "tagline": "縱橫千古，逐鹿天下",
+    "links": {
+      "title": "快速連結",
+      "heroes": "英雄圖鑑",
+      "world": "世界觀",
+      "news": "最新資訊",
+      "download": "立即下載"
+    },
+    "support": {
+      "title": "支援",
+      "privacy": "隱私政策",
+      "terms": "使用者協議",
+      "contact": "聯絡我們",
+      "faq": "常見問題"
+    },
+    "follow": {
+      "title": "關注我們"
+    },
+    "copyright": "© 2024 帝國紀元. 保留所有權利.",
+    "icp": "ICP備XXXXXXXX號"
+  }
+}

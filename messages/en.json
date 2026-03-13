@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "heroes": "Heroes",
+    "world": "World",
+    "news": "News",
+    "download": "Download",
+    "language": "EN"
+  },
+  "hero": {
+    "title": "Empire Chronicles",
+    "subtitle": "Command History. Conquer the World.",
+    "description": "Rally history's greatest heroes, build an immortal empire. Unite your allies, conquer the world, and write your own epic legend.",
+    "downloadAppStore": "Download on App Store",
+    "downloadGooglePlay": "Get it on Google Play",
+    "scrollDown": "Scroll Down"
+  },
+  "features": {
+    "title": "Game Features",
+    "subtitle": "Five core advantages for the ultimate empire experience",
+    "social": {
+      "title": "Strong Social",
+      "subtitle": "Alliance System",
+      "desc": "Form powerful alliances with players worldwide, develop joint strategies, and fight together in epic alliance wars that will be remembered forever."
+    },
+    "heroes": {
+      "title": "Rich Heroes",
+      "subtitle": "Historical Legends Across Time",
+      "desc": "Command 13 legendary heroes including Alexander, Qin Shi Huang, and Boudica. Each hero has unique skills and their own exclusive story arc."
+    },
+    "relief": {
+      "title": "Gameplay Relief",
+      "subtitle": "Collaborative Development",
+      "desc": "Intelligent assistance reduces repetitive tasks, letting you focus on strategic planning and hero development for pure strategic enjoyment."
+    },
+    "season": {
+      "title": "Season System",
+      "subtitle": "Seasonal Cycles",
+      "desc": "Unique seasonal mechanics ensure fresh strategic landscapes each season with intense leaderboard competition that keeps your imperial journey exciting."
+    },
+    "fair": {
+      "title": "Fair Competition",
+      "subtitle": "Strategy Reigns Supreme",
+      "desc": "Deep strategic systems where wisdom trumps spending. Fair resource allocation gives every player an equal opportunity to compete through strategy."
+    }
+  },
+  "heroes": {
+    "title": "Legendary Heroes",
+    "subtitle": "Across Time, United in Glory",
+    "filterAll": "All",
+    "filterAsia": "Asia",
+    "filterEurope": "Europe",
+    "filterMiddleEast": "Middle East"
+  },
+  "world": {
+    "title": "Alliance World",
+    "subtitle": "Four Civilizations, Epic Battlefields",
+    "eastAsia": {
+      "name": "East Asia",
+      "desc": "The majestic eastern empire, birthplace of Qin and Han civilizations. The Great Wall stretches thousands of miles, and the Grand Canal connects north and south. This land has nurtured countless heroes waiting for you to lead them to immortal glory."
+    },
+    "europe": {
+      "name": "Europe",
+      "desc": "The glory of ancient Greece and Rome continues here, where Celtic warriors and Viking raiders have left eternal legends. Form your European alliance and conquer the land that has nurtured countless great civilizations."
+    },
+    "middleEast": {
+      "name": "Middle East",
+      "desc": "The fertile crescent of Mesopotamia, crossroads of the Silk Road. The splendor of the Persian Empire and the maritime dominance of Carthage converge here, awaiting new conquerors to write new history."
+    },
+    "atlantis": {
+      "name": "Atlantis",
+      "desc": "The legendary lost continent has reappeared, where ancient magic and lost technology coexist. Explore this unknown territory, discover unprecedented treasures and challenges, and write the most glorious chapter of your empire."
+    }
+  },
+  "news": {
+    "title": "Latest News",
+    "subtitle": "Empire Updates, Real-time Information",
+    "viewMore": "View More",
+    "category": {
+      "update": "Update",
+      "event": "Event",
+      "story": "Lore"
+    }
+  },
+  "download": {
+    "title": "Begin Your Journey",
+    "subtitle": "Start Your Epic Journey",
+    "desc": "Join millions of players worldwide and build your legendary empire in Empire Chronicles. Download now and start your epic journey!",
+    "downloadOn": "Download on the",
+    "getItOn": "Get it on",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "scanQR": "Scan to Download"
+  },
+  "footer": {
+    "tagline": "Command History. Conquer the World.",
+    "links": {
+      "title": "Quick Links",
+      "heroes": "Heroes",
+      "world": "World",
+      "news": "News",
+      "download": "Download"
+    },
+    "support": {
+      "title": "Support",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact Us",
+      "faq": "FAQ"
+    },
+    "follow": {
+      "title": "Follow Us"
+    },
+    "copyright": "© 2024 Empire Chronicles. All rights reserved.",
+    "icp": "ICP No. XXXXXXXX"
+  }
+}

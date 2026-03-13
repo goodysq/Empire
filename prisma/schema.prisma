@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("editor")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PageSection {
+  id         String   @id @default(cuid())
+  key        String   @unique
+  titleZh    String?
+  titleEn    String?
+  subtitleZh String?
+  subtitleEn String?
+  contentZh  String?
+  contentEn  String?
+  imageUrl   String?
+  isVisible  Boolean  @default(true)
+  isLocked   Boolean  @default(false)
+  order      Int      @default(0)
+  updatedAt  DateTime @updatedAt
+}
+
+model Hero {
+  id        String   @id @default(cuid())
+  nameZh    String
+  nameEn    String
+  titleZh   String?
+  titleEn   String?
+  descZh    String?
+  descEn    String?
+  imageUrl  String
+  faction   String?
+  rarity    String?
+  isVisible Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model News {
+  id          String    @id @default(cuid())
+  titleZh     String
+  titleEn     String?
+  excerptZh   String?
+  excerptEn   String?
+  contentZh   String
+  contentEn   String?
+  coverImage  String?
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model MediaFile {
+  id         String   @id @default(cuid())
+  filename   String
+  url        String
+  size       Int
+  mimeType   String
+  uploadedAt DateTime @default(now())
+}
+
+model SiteSetting {
+  key     String  @id
+  value   String
+  labelZh String?
+  labelEn String?
+  group   String?
+}
+
+model NavItem {
+  id        String  @id @default(cuid())
+  labelZh   String
+  labelEn   String
+  href      String
+  order     Int     @default(0)
+  isVisible Boolean @default(true)
+}

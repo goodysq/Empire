@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "heroes": "英雄",
+    "world": "世界观",
+    "news": "资讯",
+    "download": "下载",
+    "language": "中"
+  },
+  "hero": {
+    "title": "帝国纪元",
+    "subtitle": "纵横千古，逐鹿天下",
+    "description": "集结历史上最伟大的英雄，建立不朽的帝国。联合盟友，征服世界，书写属于你的史诗传奇。",
+    "downloadAppStore": "App Store 下载",
+    "downloadGooglePlay": "Google Play 下载",
+    "scrollDown": "向下滚动"
+  },
+  "features": {
+    "title": "游戏特色",
+    "subtitle": "五大核心优势，打造极致帝国体验",
+    "social": {
+      "title": "强社交",
+      "subtitle": "联盟系统",
+      "desc": "与全球玩家组建强大联盟，共同制定战略，协同作战，在史诗级联盟战争中书写传奇。"
+    },
+    "heroes": {
+      "title": "丰富英雄",
+      "subtitle": "跨时空历史人物",
+      "desc": "汇聚亚历山大、秦始皇、布迪卡等13位跨越时空的历史英雄，每位英雄拥有独特技能与专属故事。"
+    },
+    "relief": {
+      "title": "玩法减负",
+      "subtitle": "协同发展",
+      "desc": "智能辅助系统减少重复操作，让你专注于战略布局与英雄培养，享受纯粹的策略乐趣。"
+    },
+    "season": {
+      "title": "赛季制",
+      "subtitle": "赛季轮回",
+      "desc": "独特赛季机制确保每个赛季都有全新的战略格局，排行榜竞争激烈，让帝国征途永远保持新鲜感。"
+    },
+    "fair": {
+      "title": "公平竞技",
+      "subtitle": "策略为王",
+      "desc": "深度策略体系让智慧超越氪金，合理的资源分配让每位玩家都能凭借战略获得公平竞争机会。"
+    }
+  },
+  "heroes": {
+    "title": "传奇英雄",
+    "subtitle": "跨越时空，群雄荟萃",
+    "filterAll": "全部",
+    "filterAsia": "亚洲",
+    "filterEurope": "欧洲",
+    "filterMiddleEast": "中东"
+  },
+  "world": {
+    "title": "联盟世界",
+    "subtitle": "四大文明圈，史诗战场",
+    "eastAsia": {
+      "name": "东亚",
+      "desc": "巍峨的东方帝国，秦汉文明的发源地。宏伟的长城横亘千里，蜿蜒的运河连通南北。这片土地孕育了无数英雄豪杰，等待你来率领他们建立不朽功业。"
+    },
+    "europe": {
+      "name": "欧洲",
+      "desc": "古希腊与罗马的荣光在此延续，凯尔特勇士与维京海盗在这片土地上留下了永恒的传说。组建你的欧洲联盟，征服这片孕育了无数伟大文明的土地。"
+    },
+    "middleEast": {
+      "name": "中东",
+      "desc": "美索不达米亚的肥沃新月地带，丝绸之路的十字路口。波斯帝国的辉煌与迦太基的海上霸权在此交汇，等待新的征服者书写新的历史。"
+    },
+    "atlantis": {
+      "name": "亚特兰蒂斯",
+      "desc": "传说中消失的神秘大陆重现于世，古老的魔法与失落的科技在此共存。探索这片未知的疆域，发现前所未有的宝藏与挑战，书写帝国最辉煌的篇章。"
+    }
+  },
+  "news": {
+    "title": "最新资讯",
+    "subtitle": "帝国动态，实时更新",
+    "viewMore": "查看更多",
+    "category": {
+      "update": "版本更新",
+      "event": "活动公告",
+      "story": "世界观"
+    }
+  },
+  "download": {
+    "title": "立即开始征途",
+    "subtitle": "开启史诗征程",
+    "desc": "加入全球数百万玩家，在帝国纪元中建立你的传奇帝国。立即下载，开启史诗征程！",
+    "downloadOn": "下载于",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "scanQR": "扫码下载"
+  },
+  "footer": {
+    "tagline": "纵横千古，逐鹿天下",
+    "links": {
+      "title": "快速链接",
+      "heroes": "英雄图鉴",
+      "world": "世界观",
+      "news": "最新资讯",
+      "download": "立即下载"
+    },
+    "support": {
+      "title": "支持",
+      "privacy": "隐私政策",
+      "terms": "用户协议",
+      "contact": "联系我们",
+      "faq": "常见问题"
+    },
+    "follow": {
+      "title": "关注我们"
+    },
+    "copyright": "© 2024 帝国纪元. 保留所有权利.",
+    "icp": "ICP备XXXXXXXX号"
+  }
+}
