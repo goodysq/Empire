@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
 const LOCALES = ["zh", "zh-TW", "en"] as const;
 
