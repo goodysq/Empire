@@ -100,7 +100,7 @@ export default function WorldSection({ locale }: WorldSectionProps) {
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#C9A84C]" />
             <span className="text-[#C9A84C] text-sm font-medium tracking-[0.3em] uppercase">
-              {loc(locale, "世界观", "世界觀", "Game World")}
+              {loc(locale, "文明", "文明", "Civilizations")}
             </span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#C9A84C]" />
           </div>

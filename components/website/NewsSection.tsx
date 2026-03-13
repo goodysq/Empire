@@ -141,7 +141,7 @@ export default function NewsSection({ locale, news: dbNews }: NewsSectionProps) 
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#C9A84C]" />
             <span className="text-[#C9A84C] text-sm font-medium tracking-[0.3em] uppercase">
-              {loc(locale, "帝国动态", "帝國動態", "Empire News")}
+              {loc(locale, "精彩内容", "精彩內容", "Highlights")}
             </span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#C9A84C]" />
           </div>
@@ -152,7 +152,7 @@ export default function NewsSection({ locale, news: dbNews }: NewsSectionProps) 
             {loc(locale, "最新资讯", "最新資訊", "Latest News")}
           </h2>
           <p className="text-[#B8A882] text-lg">
-            {loc(locale, "帝国动态，实时更新", "帝國動態，即時更新", "Empire Updates, Real-time Information")}
+            {loc(locale, "精彩内容，随时掌握", "精彩內容，隨時掌握", "Highlights, Always Up-to-date")}
           </p>
         </div>
 
