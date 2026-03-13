@@ -30,6 +30,9 @@ export default async function GuideDetailPage({ params }: Props) {
   const isEn = locale === "en";
   const title = isEn ? (guide.titleEn ?? guide.titleZh) : toTraditional(guide.titleZh, locale);
   const excerpt = isEn ? (guide.excerptEn ?? guide.excerptZh) : toTraditional(guide.excerptZh ?? "", locale);
+  const content = isEn
+    ? (guide.contentEn ?? guide.contentZh ?? "")
+    : toTraditional(guide.contentZh ?? "", locale);
   const category = guide.category;
 
   const backLabel = isEn ? "Back to Guides" : locale === "zh-TW" ? "返回攻略" : "返回攻略";
@@ -88,12 +91,19 @@ export default async function GuideDetailPage({ params }: Props) {
           {/* Divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent mb-8" />
 
-          {/* Placeholder content if no rich content */}
-          <div className="article-content text-[#B8A882] leading-relaxed">
-            <p className="text-[#8B8070] italic text-center py-12">
-              {isEn ? "Detailed guide content coming soon..." : "攻略详细内容即将发布..."}
-            </p>
-          </div>
+          {/* Guide content */}
+          {content ? (
+            <div
+              className="article-content text-[#B8A882] leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
+          ) : (
+            <div className="article-content text-[#B8A882] leading-relaxed">
+              <p className="text-[#8B8070] italic text-center py-12">
+                {isEn ? "Detailed guide content coming soon..." : "攻略详细内容即将发布..."}
+              </p>
+            </div>
+          )}
 
           {/* Bottom divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent mt-12 mb-8" />

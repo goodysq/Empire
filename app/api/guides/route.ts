@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
       titleEn: body.titleEn ?? "",
       excerptZh: body.excerptZh ?? "",
       excerptEn: body.excerptEn ?? "",
+      contentZh: body.contentZh ?? "",
+      contentEn: body.contentEn ?? "",
       coverImage: body.coverImage ?? "",
       category: body.category ?? "",
       isVisible: body.isVisible ?? true,

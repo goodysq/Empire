@@ -99,6 +99,8 @@ model Guide {
   titleEn    String?
   excerptZh  String?
   excerptEn  String?
+  contentZh  String?
+  contentEn  String?
   coverImage String?
   category   String?
   isVisible  Boolean  @default(true)

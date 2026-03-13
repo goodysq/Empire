@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const guide = await prisma.guide.findUnique({ where: { id } });
+  if (!guide) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json(guide);
+}
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -15,6 +25,8 @@ export async function PUT(
       titleEn: body.titleEn,
       excerptZh: body.excerptZh,
       excerptEn: body.excerptEn,
+      contentZh: body.contentZh,
+      contentEn: body.contentEn,
       coverImage: body.coverImage,
       category: body.category,
       isVisible: body.isVisible ?? true,
