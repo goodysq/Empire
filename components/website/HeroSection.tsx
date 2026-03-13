@@ -7,6 +7,8 @@ import { loc } from "@/lib/loc";
 
 interface HeroSectionProps {
   locale: string;
+  iosLink?: string;
+  androidLink?: string;
 }
 
 const heroImages = [
@@ -26,7 +28,7 @@ interface Particle {
   maxLife: number;
 }
 
-export default function HeroSection({ locale }: HeroSectionProps) {
+export default function HeroSection({ locale, iosLink = "", androidLink = "" }: HeroSectionProps) {
   const [currentHero, setCurrentHero] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -197,11 +199,10 @@ export default function HeroSection({ locale }: HeroSectionProps) {
           {/* CTA Buttons — centered */}
           <div className="flex flex-wrap gap-4 justify-center">
             <a
-              href="#download"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#download")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              href={iosLink || "#download"}
+              target={iosLink ? "_blank" : undefined}
+              rel={iosLink ? "noopener noreferrer" : undefined}
+              onClick={!iosLink ? (e) => { e.preventDefault(); document.querySelector("#download")?.scrollIntoView({ behavior: "smooth" }); } : undefined}
               className="group relative flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#C9A84C] to-[#E8C96A] text-[#0A0806] font-bold rounded overflow-hidden transition-all hover:shadow-xl hover:shadow-[#C9A84C]/40 hover:scale-105"
             >
               <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -217,11 +218,10 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             </a>
 
             <a
-              href="#download"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#download")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              href={androidLink || "#download"}
+              target={androidLink ? "_blank" : undefined}
+              rel={androidLink ? "noopener noreferrer" : undefined}
+              onClick={!androidLink ? (e) => { e.preventDefault(); document.querySelector("#download")?.scrollIntoView({ behavior: "smooth" }); } : undefined}
               className="group relative flex items-center gap-3 px-8 py-4 border border-[#C9A84C]/60 text-[#E8C96A] font-bold rounded overflow-hidden transition-all hover:bg-[#C9A84C]/10 hover:border-[#E8C96A] hover:shadow-lg hover:shadow-[#C9A84C]/20 hover:scale-105"
             >
               <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">

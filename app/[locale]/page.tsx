@@ -52,13 +52,13 @@ export default async function HomePage({
   return (
     <main className="bg-[#0A0806] min-h-screen">
       <Navbar locale={locale} />
-      <HeroSection locale={locale} />
+      <HeroSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
       <FeaturesSection locale={locale} />
       <HeroesGallery locale={locale} heroes={heroes} />
       <WorldSection locale={locale} />
       <NewsSection locale={locale} news={convertedNews} />
       <DownloadSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
-      <Footer locale={locale} />
+      <Footer locale={locale} iosLink={iosLink} androidLink={androidLink} />
     </main>
   );
 }

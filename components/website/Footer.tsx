@@ -5,9 +5,11 @@ import { loc } from "@/lib/loc";
 
 interface FooterProps {
   locale: string;
+  iosLink?: string;
+  androidLink?: string;
 }
 
-export default function Footer({ locale }: FooterProps) {
+export default function Footer({ locale, iosLink = "", androidLink = "" }: FooterProps) {
   const zh = locale !== "en";
 
   const scrollTo = (href: string) => {
@@ -142,7 +144,9 @@ export default function Footer({ locale }: FooterProps) {
             </h4>
             <div className="space-y-3">
               <a
-                href="#"
+                href={iosLink || "#download"}
+                target={iosLink ? "_blank" : undefined}
+                rel={iosLink ? "noopener noreferrer" : undefined}
                 className="flex items-center gap-3 px-4 py-3 bg-[#1A1510] border border-[#C9A84C]/30 rounded-lg hover:border-[#C9A84C]/60 hover:bg-[#1A1510]/80 transition-all group"
               >
                 <svg className="w-6 h-6 text-[#C9A84C]" viewBox="0 0 24 24" fill="currentColor">
@@ -154,7 +158,9 @@ export default function Footer({ locale }: FooterProps) {
                 </div>
               </a>
               <a
-                href="#"
+                href={androidLink || "#download"}
+                target={androidLink ? "_blank" : undefined}
+                rel={androidLink ? "noopener noreferrer" : undefined}
                 className="flex items-center gap-3 px-4 py-3 bg-[#1A1510] border border-[#C9A84C]/30 rounded-lg hover:border-[#C9A84C]/60 transition-all group"
               >
                 <svg className="w-6 h-6 text-[#C9A84C]" viewBox="0 0 24 24" fill="currentColor">

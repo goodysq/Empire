@@ -9,6 +9,6 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: process.env["DATABASE_URL"] ?? `file:${path.join(process.cwd(), "prisma/dev.db")}`,
+    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"] ?? `file:${path.join(process.cwd(), "prisma/dev.db")}`,
   },
 });
