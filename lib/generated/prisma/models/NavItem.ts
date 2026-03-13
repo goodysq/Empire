@@ -1060,6 +1060,7 @@ export type NavItemCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many NavItems.
    */
   data: Prisma.NavItemCreateManyInput | Prisma.NavItemCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1078,6 +1079,7 @@ export type NavItemCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many NavItems.
    */
   data: Prisma.NavItemCreateManyInput | Prisma.NavItemCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

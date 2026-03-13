@@ -1284,6 +1284,7 @@ export type HeroCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Heroes.
    */
   data: Prisma.HeroCreateManyInput | Prisma.HeroCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1302,6 +1303,7 @@ export type HeroCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Heroes.
    */
   data: Prisma.HeroCreateManyInput | Prisma.HeroCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

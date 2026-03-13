@@ -1268,6 +1268,7 @@ export type PageSectionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many PageSections.
    */
   data: Prisma.PageSectionCreateManyInput | Prisma.PageSectionCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1286,6 +1287,7 @@ export type PageSectionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many PageSections.
    */
   data: Prisma.PageSectionCreateManyInput | Prisma.PageSectionCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

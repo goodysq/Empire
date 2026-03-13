@@ -988,6 +988,7 @@ export type SiteSettingCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many SiteSettings.
    */
   data: Prisma.SiteSettingCreateManyInput | Prisma.SiteSettingCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1006,6 +1007,7 @@ export type SiteSettingCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many SiteSettings.
    */
   data: Prisma.SiteSettingCreateManyInput | Prisma.SiteSettingCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

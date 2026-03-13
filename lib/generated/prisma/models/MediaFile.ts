@@ -1060,6 +1060,7 @@ export type MediaFileCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many MediaFiles.
    */
   data: Prisma.MediaFileCreateManyInput | Prisma.MediaFileCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1078,6 +1079,7 @@ export type MediaFileCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many MediaFiles.
    */
   data: Prisma.MediaFileCreateManyInput | Prisma.MediaFileCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
