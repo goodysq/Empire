@@ -76,7 +76,7 @@ export default async function HomePage({
   const renderedSections = allSections.map((section) => {
     switch (section.key) {
       case "hero":
-        return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} />;
+        return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />;
       case "features":
         return <FeaturesSection key="features" locale={locale} />;
       case "heroes_gallery":

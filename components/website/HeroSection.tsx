@@ -9,6 +9,8 @@ interface HeroSectionProps {
   locale: string;
   iosLink?: string;
   androidLink?: string;
+  gameNameZh?: string;
+  gameNameEn?: string;
 }
 
 const heroImages = [
@@ -28,7 +30,7 @@ interface Particle {
   maxLife: number;
 }
 
-export default function HeroSection({ locale, iosLink = "", androidLink = "" }: HeroSectionProps) {
+export default function HeroSection({ locale, iosLink = "", androidLink = "", gameNameZh = "烬火王冠", gameNameEn = "Cinder & Crown" }: HeroSectionProps) {
   const [currentHero, setCurrentHero] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -164,16 +166,49 @@ export default function HeroSection({ locale, iosLink = "", androidLink = "" }: 
             className="font-black leading-none mb-5"
             style={{ fontFamily: "var(--font-cinzel)" }}
           >
-            <span
-              className="block text-6xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#F5EDD5] via-[#E8C96A] to-[#C9A84C] bg-clip-text text-transparent drop-shadow-2xl"
-            >
-              {loc(locale, "帝国", "帝國", "EMPIRE")}
-            </span>
-            <span
-              className="block text-6xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#E8C96A] via-[#C9A84C] to-[#8B5E1A] bg-clip-text text-transparent drop-shadow-2xl"
-            >
-              {loc(locale, "纪元", "紀元", "CHRONICLES")}
-            </span>
+            {locale === "en" ? (
+              // English: show full name, split into two lines at '&' or midpoint
+              (() => {
+                const parts = gameNameEn.split(/\s*&\s*/);
+                if (parts.length >= 2) {
+                  return (
+                    <>
+                      <span className="block text-5xl sm:text-6xl lg:text-7xl bg-gradient-to-b from-[#F5EDD5] via-[#E8C96A] to-[#C9A84C] bg-clip-text text-transparent drop-shadow-2xl">
+                        {parts[0].trim().toUpperCase()}
+                      </span>
+                      <span className="block text-5xl sm:text-6xl lg:text-7xl bg-gradient-to-b from-[#E8C96A] via-[#C9A84C] to-[#8B5E1A] bg-clip-text text-transparent drop-shadow-2xl">
+                        &amp; {parts[1].trim().toUpperCase()}
+                      </span>
+                    </>
+                  );
+                }
+                return (
+                  <span className="block text-5xl sm:text-6xl lg:text-7xl bg-gradient-to-b from-[#F5EDD5] via-[#E8C96A] to-[#C9A84C] bg-clip-text text-transparent drop-shadow-2xl">
+                    {gameNameEn.toUpperCase()}
+                  </span>
+                );
+              })()
+            ) : (
+              // Chinese: split at midpoint
+              (() => {
+                const name = gameNameZh;
+                const mid = Math.ceil(name.length / 2);
+                const line1 = name.slice(0, mid);
+                const line2 = name.slice(mid);
+                return (
+                  <>
+                    <span className="block text-6xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#F5EDD5] via-[#E8C96A] to-[#C9A84C] bg-clip-text text-transparent drop-shadow-2xl">
+                      {line1}
+                    </span>
+                    {line2 && (
+                      <span className="block text-6xl sm:text-7xl lg:text-8xl bg-gradient-to-b from-[#E8C96A] via-[#C9A84C] to-[#8B5E1A] bg-clip-text text-transparent drop-shadow-2xl">
+                        {line2}
+                      </span>
+                    )}
+                  </>
+                );
+              })()
+            )}
           </h1>
 
           {/* Symmetric golden divider — adapts to text width */}
