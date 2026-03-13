@@ -390,7 +390,8 @@ export const ModelName = {
   News: 'News',
   MediaFile: 'MediaFile',
   SiteSetting: 'SiteSetting',
-  NavItem: 'NavItem'
+  NavItem: 'NavItem',
+  Guide: 'Guide'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "adminUser" | "pageSection" | "hero" | "news" | "mediaFile" | "siteSetting" | "navItem"
+    modelProps: "adminUser" | "pageSection" | "hero" | "news" | "mediaFile" | "siteSetting" | "navItem" | "guide"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Guide: {
+      payload: Prisma.$GuidePayload<ExtArgs>
+      fields: Prisma.GuideFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GuideFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GuideFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>
+        }
+        findFirst: {
+          args: Prisma.GuideFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GuideFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>
+        }
+        findMany: {
+          args: Prisma.GuideFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>[]
+        }
+        create: {
+          args: Prisma.GuideCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>
+        }
+        createMany: {
+          args: Prisma.GuideCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GuideCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>[]
+        }
+        delete: {
+          args: Prisma.GuideDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>
+        }
+        update: {
+          args: Prisma.GuideUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>
+        }
+        deleteMany: {
+          args: Prisma.GuideDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GuideUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GuideUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>[]
+        }
+        upsert: {
+          args: Prisma.GuideUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GuidePayload>
+        }
+        aggregate: {
+          args: Prisma.GuideAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGuide>
+        }
+        groupBy: {
+          args: Prisma.GuideGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GuideGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GuideCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GuideCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1072,6 +1147,23 @@ export const NavItemScalarFieldEnum = {
 } as const
 
 export type NavItemScalarFieldEnum = (typeof NavItemScalarFieldEnum)[keyof typeof NavItemScalarFieldEnum]
+
+
+export const GuideScalarFieldEnum = {
+  id: 'id',
+  titleZh: 'titleZh',
+  titleEn: 'titleEn',
+  excerptZh: 'excerptZh',
+  excerptEn: 'excerptEn',
+  coverImage: 'coverImage',
+  category: 'category',
+  isVisible: 'isVisible',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GuideScalarFieldEnum = (typeof GuideScalarFieldEnum)[keyof typeof GuideScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1268,6 +1360,7 @@ export type GlobalOmitConfig = {
   mediaFile?: Prisma.MediaFileOmit
   siteSetting?: Prisma.SiteSettingOmit
   navItem?: Prisma.NavItemOmit
+  guide?: Prisma.GuideOmit
 }
 
 /* Types for Logging */

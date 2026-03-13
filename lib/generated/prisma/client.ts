@@ -76,3 +76,8 @@ export type SiteSetting = Prisma.SiteSettingModel
  * 
  */
 export type NavItem = Prisma.NavItemModel
+/**
+ * Model Guide
+ * 
+ */
+export type Guide = Prisma.GuideModel

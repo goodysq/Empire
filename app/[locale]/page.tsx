@@ -5,14 +5,15 @@ import HeroesGallery from "@/components/website/HeroesGallery";
 import WorldSection from "@/components/website/WorldSection";
 import NewsSection from "@/components/website/NewsSection";
 import DownloadSection from "@/components/website/DownloadSection";
+import GuidesSection from "@/components/website/GuidesSection";
 import CustomSectionBlock from "@/components/website/CustomSectionBlock";
 import Footer from "@/components/website/Footer";
 import { prisma } from "@/lib/db";
 import { toTraditional } from "@/lib/opencc";
 
-// System section keys that have dedicated components
+// System section keys — have dedicated components
 const SYSTEM_KEYS = new Set([
-  "hero", "features", "heroes_gallery", "world", "news", "download",
+  "hero", "features", "heroes_gallery", "world", "news", "guides", "download",
   "support_privacy", "support_terms", "support_contact", "support_faq",
 ]);
 
@@ -25,28 +26,20 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
 
-  const [heroes, news, allSettings, allSections, navItems] = await Promise.all([
-    prisma.hero.findMany({
-      where: { isVisible: true },
-      orderBy: { order: "asc" },
-    }),
-    prisma.news.findMany({
-      where: { isPublished: true },
-      orderBy: { publishedAt: "desc" },
-      take: 3,
-    }),
-    prisma.siteSetting.findMany(),
-    // Fetch ALL visible sections in DB order — used to determine render order
-    prisma.pageSection.findMany({
-      where: { isVisible: true },
-      orderBy: { order: "asc" },
-    }),
-    // DB-managed nav items
-    prisma.navItem.findMany({
-      where: { isVisible: true },
-      orderBy: { order: "asc" },
-    }),
-  ]);
+  const [heroes, news, allSettings, allSections, navItems, guides, guidesSection] =
+    await Promise.all([
+      prisma.hero.findMany({ where: { isVisible: true }, orderBy: { order: "asc" } }),
+      prisma.news.findMany({
+        where: { isPublished: true },
+        orderBy: { publishedAt: "desc" },
+        take: 3,
+      }),
+      prisma.siteSetting.findMany(),
+      prisma.pageSection.findMany({ where: { isVisible: true }, orderBy: { order: "asc" } }),
+      prisma.navItem.findMany({ where: { isVisible: true }, orderBy: { order: "asc" } }),
+      prisma.guide.findMany({ where: { isVisible: true }, orderBy: { order: "asc" } }),
+      prisma.pageSection.findUnique({ where: { key: "guides" } }),
+    ]);
 
   const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
 
@@ -66,7 +59,6 @@ export default async function HomePage({
     telegram: gs("telegram_url") || undefined,
   };
 
-  // Custom nav items from sections with showInNav=true (non-system)
   const customNavSections = allSections.filter(
     (s) => !SYSTEM_KEYS.has(s.key) && s.showInNav
   );
@@ -80,8 +72,7 @@ export default async function HomePage({
         }))
       : news;
 
-  // Render sections in DB order
-  // System sections use fixed components; custom sections use CustomSectionBlock
+  // All sections ordered by DB; system keys map to their components
   const renderedSections = allSections.map((section) => {
     switch (section.key) {
       case "hero":
@@ -94,12 +85,23 @@ export default async function HomePage({
         return <WorldSection key="world" locale={locale} />;
       case "news":
         return <NewsSection key="news" locale={locale} news={convertedNews} />;
+      case "guides":
+        // Only render if there are guides
+        return guides.length > 0 ? (
+          <GuidesSection
+            key="guides"
+            locale={locale}
+            guides={guides}
+            titleZh={guidesSection?.titleZh ?? undefined}
+            titleEn={guidesSection?.titleEn ?? undefined}
+            subtitleZh={guidesSection?.subtitleZh ?? undefined}
+            subtitleEn={guidesSection?.subtitleEn ?? undefined}
+          />
+        ) : null;
       case "download":
         return <DownloadSection key="download" locale={locale} iosLink={iosLink} androidLink={androidLink} />;
       default:
-        // Skip support page sections — they only render on /support
         if (section.key.startsWith("support_")) return null;
-        // Render custom user-added sections
         return (
           <CustomSectionBlock
             key={section.key}

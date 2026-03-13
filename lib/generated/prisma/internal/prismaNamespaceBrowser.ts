@@ -57,7 +57,8 @@ export const ModelName = {
   News: 'News',
   MediaFile: 'MediaFile',
   SiteSetting: 'SiteSetting',
-  NavItem: 'NavItem'
+  NavItem: 'NavItem',
+  Guide: 'Guide'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -181,6 +182,23 @@ export const NavItemScalarFieldEnum = {
 } as const
 
 export type NavItemScalarFieldEnum = (typeof NavItemScalarFieldEnum)[keyof typeof NavItemScalarFieldEnum]
+
+
+export const GuideScalarFieldEnum = {
+  id: 'id',
+  titleZh: 'titleZh',
+  titleEn: 'titleEn',
+  excerptZh: 'excerptZh',
+  excerptEn: 'excerptEn',
+  coverImage: 'coverImage',
+  category: 'category',
+  isVisible: 'isVisible',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GuideScalarFieldEnum = (typeof GuideScalarFieldEnum)[keyof typeof GuideScalarFieldEnum]
 
 
 export const SortOrder = {

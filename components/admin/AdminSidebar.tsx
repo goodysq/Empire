@@ -12,12 +12,14 @@ import {
   UserCog,
   Layers,
   ChevronRight,
+  BookOpen,
 } from "lucide-react";
 
 const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard", exact: true },
   { href: "/admin/heroes", icon: Users, label: "英雄管理" },
   { href: "/admin/news", icon: Newspaper, label: "资讯管理" },
+  { href: "/admin/guides", icon: BookOpen, label: "攻略管理" },
   { href: "/admin/sections", icon: Layers, label: "版块管理" },
   { href: "/admin/media", icon: Image, label: "媒体库" },
   { href: "/admin/navigation", icon: Navigation, label: "导航管理" },
