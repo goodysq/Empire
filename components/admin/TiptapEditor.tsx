@@ -97,7 +97,7 @@ export default function TiptapEditor({ value, onChange, placeholder }: TiptapEdi
     if (!editor) return;
     const current = editor.getHTML();
     if (current !== value) {
-      editor.commands.setContent(value || "", false);
+      editor.commands.setContent(value || "", { emitUpdate: false });
     }
   }, [value, editor]);
 
