@@ -7,6 +7,9 @@ import { Menu, X, Globe, ChevronDown } from "lucide-react";
 
 interface NavbarProps {
   locale: string;
+  logoUrl?: string;
+  gameNameZh?: string;
+  gameNameEn?: string;
 }
 
 const navLinks = [
@@ -37,7 +40,7 @@ function getDownloadLabel(locale: string) {
   return "立即下载";
 }
 
-export default function Navbar({ locale }: NavbarProps) {
+export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -96,18 +99,27 @@ export default function Navbar({ locale }: NavbarProps) {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href={`/${locale}`} className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#C9A84C] to-[#8B5E1A] rounded-lg opacity-80 group-hover:opacity-100 transition-opacity" />
-              <span className="relative text-white font-bold text-lg" style={{ fontFamily: "var(--font-cinzel)" }}>
-                帝
-              </span>
+            <div className="relative w-10 h-10 flex items-center justify-center flex-shrink-0">
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={logoUrl} alt="logo" className="w-10 h-10 rounded-lg object-cover" />
+              ) : (
+                <>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#C9A84C] to-[#8B5E1A] rounded-lg opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <span className="relative text-white font-bold text-lg" style={{ fontFamily: "var(--font-cinzel)" }}>
+                    帝
+                  </span>
+                </>
+              )}
             </div>
             <div>
               <div className="text-[#E8C96A] font-bold text-lg leading-none" style={{ fontFamily: "var(--font-cinzel)" }}>
-                {locale === "zh-TW" ? "帝國紀元" : "帝国纪元"}
+                {gameNameZh
+                  ? (locale === "zh-TW" ? gameNameZh : gameNameZh)
+                  : (locale === "zh-TW" ? "帝國紀元" : "帝国纪元")}
               </div>
               <div className="text-[#B8A882] text-xs leading-none mt-0.5">
-                Empire Chronicles
+                {gameNameEn || "Empire Chronicles"}
               </div>
             </div>
           </Link>

@@ -37,6 +37,9 @@ export default async function HomePage({
 
   const iosLink = gs("ios_link");
   const androidLink = gs("android_link");
+  const logoUrl = gs("logo_url");
+  const gameNameZh = gs("game_name_zh");
+  const gameNameEn = gs("game_name_en");
 
   const socialLinks = {
     weibo: gs("weibo_url") || undefined,
@@ -68,14 +71,14 @@ export default async function HomePage({
 
   return (
     <main className="bg-[#0A0806] min-h-screen">
-      <Navbar locale={locale} />
+      <Navbar locale={locale} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
       <HeroSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
       <FeaturesSection locale={locale} />
       <HeroesGallery locale={locale} heroes={heroes} />
       <WorldSection locale={locale} />
       <NewsSection locale={locale} news={convertedNews} />
       <DownloadSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
-      <Footer locale={locale} iosLink={iosLink} androidLink={androidLink} socialLinks={socialLinks} supportLinks={supportLinks} />
+      <Footer locale={locale} iosLink={iosLink} androidLink={androidLink} socialLinks={socialLinks} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
     </main>
   );
 }

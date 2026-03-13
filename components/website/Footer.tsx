@@ -26,6 +26,9 @@ interface FooterProps {
   androidLink?: string;
   socialLinks?: SocialLinks;
   supportLinks?: SupportLinks;
+  logoUrl?: string;
+  gameNameZh?: string;
+  gameNameEn?: string;
 }
 
 const socialIcons: {
@@ -103,7 +106,9 @@ export default function Footer({
   iosLink = "",
   androidLink = "",
   socialLinks = {},
-  supportLinks = {},
+  logoUrl,
+  gameNameZh,
+  gameNameEn,
 }: FooterProps) {
   const scrollTo = (href: string) => {
     const el = document.querySelector(href);
@@ -113,10 +118,10 @@ export default function Footer({
   const activeSocials = socialIcons.filter((s) => !!socialLinks[s.key]);
 
   const supportItems = [
-    { labelZh: "隐私政策", labelTw: "隱私政策", labelEn: "Privacy Policy", url: supportLinks.privacy },
-    { labelZh: "用户协议", labelTw: "使用者協議", labelEn: "Terms of Service", url: supportLinks.terms },
-    { labelZh: "联系我们", labelTw: "聯絡我們", labelEn: "Contact Us", url: supportLinks.contact },
-    { labelZh: "常见问题", labelTw: "常見問題", labelEn: "FAQ", url: supportLinks.faq },
+    { labelZh: "隐私政策", labelTw: "隱私政策", labelEn: "Privacy Policy", href: `/${locale}/support#privacy` },
+    { labelZh: "用户协议", labelTw: "使用者協議", labelEn: "Terms of Service", href: `/${locale}/support#terms` },
+    { labelZh: "联系我们", labelTw: "聯絡我們", labelEn: "Contact Us", href: `/${locale}/support#contact` },
+    { labelZh: "常见问题", labelTw: "常見問題", labelEn: "FAQ", href: `/${locale}/support#faq` },
   ];
 
   return (
@@ -128,17 +133,24 @@ export default function Footer({
           {/* Brand column */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="relative w-10 h-10 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C9A84C] to-[#8B5E1A] rounded-lg opacity-80" />
-                <span className="relative text-white font-bold text-lg" style={{ fontFamily: "var(--font-cinzel)" }}>
-                  帝
-                </span>
+              <div className="relative w-10 h-10 flex items-center justify-center flex-shrink-0">
+                {logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={logoUrl} alt="logo" className="w-10 h-10 rounded-lg object-cover" />
+                ) : (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#C9A84C] to-[#8B5E1A] rounded-lg opacity-80" />
+                    <span className="relative text-white font-bold text-lg" style={{ fontFamily: "var(--font-cinzel)" }}>
+                      帝
+                    </span>
+                  </>
+                )}
               </div>
               <div>
                 <div className="text-[#E8C96A] font-bold" style={{ fontFamily: "var(--font-cinzel)" }}>
-                  {locale === "zh-TW" ? "帝國紀元" : "帝国纪元"}
+                  {gameNameZh || (locale === "zh-TW" ? "帝國紀元" : "帝国纪元")}
                 </div>
-                <div className="text-[#B8A882] text-xs">Empire Chronicles</div>
+                <div className="text-[#B8A882] text-xs">{gameNameEn || "Empire Chronicles"}</div>
               </div>
             </div>
             <p className="text-[#B8A882]/70 text-sm leading-relaxed mb-6">
@@ -196,20 +208,12 @@ export default function Footer({
             <ul className="space-y-2.5">
               {supportItems.map((item) => (
                 <li key={item.labelEn}>
-                  {item.url ? (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#B8A882]/70 hover:text-[#E8C96A] text-sm transition-colors duration-200"
-                    >
-                      {loc(locale, item.labelZh, item.labelTw, item.labelEn)}
-                    </a>
-                  ) : (
-                    <span className="text-[#B8A882]/30 text-sm">
-                      {loc(locale, item.labelZh, item.labelTw, item.labelEn)}
-                    </span>
-                  )}
+                  <a
+                    href={item.href}
+                    className="text-[#B8A882]/70 hover:text-[#E8C96A] text-sm transition-colors duration-200"
+                  >
+                    {loc(locale, item.labelZh, item.labelTw, item.labelEn)}
+                  </a>
                 </li>
               ))}
             </ul>

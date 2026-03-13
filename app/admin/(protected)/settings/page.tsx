@@ -59,6 +59,7 @@ export default function SettingsAdminPage() {
 
   const fieldGroups: Record<string, { key: string; label: string; placeholder?: string; type?: string }[]> = {
     general: [
+      { key: "logo_url", label: "游戏 Logo 图片地址（留空使用默认图标）", placeholder: "https://..." },
       { key: "game_name_zh", label: "游戏名称（中文）", placeholder: "帝国纪元" },
       { key: "game_name_en", label: "游戏名称（英文）", placeholder: "Empire Chronicles" },
       { key: "site_tagline_zh", label: "网站标语（中文）", placeholder: "纵横千古，逐鹿天下" },
