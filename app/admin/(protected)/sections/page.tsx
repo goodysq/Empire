@@ -28,6 +28,7 @@ const systemSectionLabels: Record<string, string> = {
   heroes_gallery: "英雄图鉴",
   world: "世界观",
   news: "最新资讯",
+  guides: "攻略中心",
   download: "下载区域",
 };
 
