@@ -10,30 +10,36 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const formData = await req.formData();
-  const file = formData.get("file") as File;
+  try {
+    const formData = await req.formData();
+    const file = formData.get("file") as File;
 
-  if (!file) {
-    return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    if (!file) {
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    }
+
+    // Upload to Vercel Blob
+    const timestamp = Date.now();
+    const filename = `${timestamp}-${file.name.replace(/\s/g, "-")}`;
+
+    const blob = await put(filename, file, {
+      access: "public",
+      contentType: file.type,
+    });
+
+    const mediaFile = await prisma.mediaFile.create({
+      data: {
+        filename: file.name,
+        url: blob.url,
+        size: file.size,
+        mimeType: file.type,
+      },
+    });
+
+    return NextResponse.json(mediaFile, { status: 201 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[media upload error]", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const timestamp = Date.now();
-  const filename = `${timestamp}-${file.name.replace(/\s/g, "-")}`;
-
-  // Upload to Vercel Blob
-  const blob = await put(filename, file, {
-    access: "public",
-    contentType: file.type,
-  });
-
-  const mediaFile = await prisma.mediaFile.create({
-    data: {
-      filename: file.name,
-      url: blob.url,
-      size: file.size,
-      mimeType: file.type,
-    },
-  });
-
-  return NextResponse.json(mediaFile, { status: 201 });
 }
