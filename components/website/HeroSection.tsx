@@ -151,7 +151,7 @@ export default function HeroSection({ locale, iosLink = "", androidLink = "" }: 
 
       {/* Centered content */}
       <div className="relative z-20 h-full flex flex-col justify-center items-center px-6 text-center">
-        <div className="max-w-2xl w-full">
+        <div className="max-w-4xl w-full">
           {/* Eyebrow label */}
           <div className="mb-3">
             <span className="inline-block text-[#C9A84C] text-sm font-medium tracking-[0.35em] uppercase">
