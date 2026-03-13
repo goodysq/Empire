@@ -30,6 +30,7 @@ model PageSection {
   imageUrl   String?
   isVisible  Boolean  @default(true)
   isLocked   Boolean  @default(false)
+  showInNav  Boolean  @default(false)
   order      Int      @default(0)
   updatedAt  DateTime @updatedAt
 }

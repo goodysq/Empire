@@ -20,6 +20,7 @@ export async function PUT(
       imageUrl: body.imageUrl,
       isVisible: body.isVisible ?? true,
       isLocked: body.isLocked ?? false,
+      showInNav: body.showInNav ?? false,
       ...(body.order !== undefined ? { order: body.order } : {}),
     },
     create: {
@@ -33,6 +34,7 @@ export async function PUT(
       imageUrl: body.imageUrl,
       isVisible: body.isVisible ?? true,
       isLocked: body.isLocked ?? false,
+      showInNav: body.showInNav ?? false,
       order: body.order ?? 0,
     },
   });

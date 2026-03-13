@@ -46,6 +46,7 @@ export type PageSectionMinAggregateOutputType = {
   imageUrl: string | null
   isVisible: boolean | null
   isLocked: boolean | null
+  showInNav: boolean | null
   order: number | null
   updatedAt: Date | null
 }
@@ -62,6 +63,7 @@ export type PageSectionMaxAggregateOutputType = {
   imageUrl: string | null
   isVisible: boolean | null
   isLocked: boolean | null
+  showInNav: boolean | null
   order: number | null
   updatedAt: Date | null
 }
@@ -78,6 +80,7 @@ export type PageSectionCountAggregateOutputType = {
   imageUrl: number
   isVisible: number
   isLocked: number
+  showInNav: number
   order: number
   updatedAt: number
   _all: number
@@ -104,6 +107,7 @@ export type PageSectionMinAggregateInputType = {
   imageUrl?: true
   isVisible?: true
   isLocked?: true
+  showInNav?: true
   order?: true
   updatedAt?: true
 }
@@ -120,6 +124,7 @@ export type PageSectionMaxAggregateInputType = {
   imageUrl?: true
   isVisible?: true
   isLocked?: true
+  showInNav?: true
   order?: true
   updatedAt?: true
 }
@@ -136,6 +141,7 @@ export type PageSectionCountAggregateInputType = {
   imageUrl?: true
   isVisible?: true
   isLocked?: true
+  showInNav?: true
   order?: true
   updatedAt?: true
   _all?: true
@@ -239,6 +245,7 @@ export type PageSectionGroupByOutputType = {
   imageUrl: string | null
   isVisible: boolean
   isLocked: boolean
+  showInNav: boolean
   order: number
   updatedAt: Date
   _count: PageSectionCountAggregateOutputType | null
@@ -278,6 +285,7 @@ export type PageSectionWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"PageSection"> | string | null
   isVisible?: Prisma.BoolFilter<"PageSection"> | boolean
   isLocked?: Prisma.BoolFilter<"PageSection"> | boolean
+  showInNav?: Prisma.BoolFilter<"PageSection"> | boolean
   order?: Prisma.IntFilter<"PageSection"> | number
   updatedAt?: Prisma.DateTimeFilter<"PageSection"> | Date | string
 }
@@ -294,6 +302,7 @@ export type PageSectionOrderByWithRelationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  showInNav?: Prisma.SortOrder
   order?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -313,6 +322,7 @@ export type PageSectionWhereUniqueInput = Prisma.AtLeast<{
   imageUrl?: Prisma.StringNullableFilter<"PageSection"> | string | null
   isVisible?: Prisma.BoolFilter<"PageSection"> | boolean
   isLocked?: Prisma.BoolFilter<"PageSection"> | boolean
+  showInNav?: Prisma.BoolFilter<"PageSection"> | boolean
   order?: Prisma.IntFilter<"PageSection"> | number
   updatedAt?: Prisma.DateTimeFilter<"PageSection"> | Date | string
 }, "id" | "key">
@@ -329,6 +339,7 @@ export type PageSectionOrderByWithAggregationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  showInNav?: Prisma.SortOrder
   order?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PageSectionCountOrderByAggregateInput
@@ -353,6 +364,7 @@ export type PageSectionScalarWhereWithAggregatesInput = {
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"PageSection"> | string | null
   isVisible?: Prisma.BoolWithAggregatesFilter<"PageSection"> | boolean
   isLocked?: Prisma.BoolWithAggregatesFilter<"PageSection"> | boolean
+  showInNav?: Prisma.BoolWithAggregatesFilter<"PageSection"> | boolean
   order?: Prisma.IntWithAggregatesFilter<"PageSection"> | number
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PageSection"> | Date | string
 }
@@ -369,6 +381,7 @@ export type PageSectionCreateInput = {
   imageUrl?: string | null
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: number
   updatedAt?: Date | string
 }
@@ -385,6 +398,7 @@ export type PageSectionUncheckedCreateInput = {
   imageUrl?: string | null
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: number
   updatedAt?: Date | string
 }
@@ -401,6 +415,7 @@ export type PageSectionUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInNav?: Prisma.BoolFieldUpdateOperationsInput | boolean
   order?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -417,6 +432,7 @@ export type PageSectionUncheckedUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInNav?: Prisma.BoolFieldUpdateOperationsInput | boolean
   order?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -433,6 +449,7 @@ export type PageSectionCreateManyInput = {
   imageUrl?: string | null
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: number
   updatedAt?: Date | string
 }
@@ -449,6 +466,7 @@ export type PageSectionUpdateManyMutationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInNav?: Prisma.BoolFieldUpdateOperationsInput | boolean
   order?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -465,6 +483,7 @@ export type PageSectionUncheckedUpdateManyInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInNav?: Prisma.BoolFieldUpdateOperationsInput | boolean
   order?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -481,6 +500,7 @@ export type PageSectionCountOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  showInNav?: Prisma.SortOrder
   order?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -501,6 +521,7 @@ export type PageSectionMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  showInNav?: Prisma.SortOrder
   order?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -517,6 +538,7 @@ export type PageSectionMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isLocked?: Prisma.SortOrder
+  showInNav?: Prisma.SortOrder
   order?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -551,6 +573,7 @@ export type PageSectionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   imageUrl?: boolean
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["pageSection"]>
@@ -567,6 +590,7 @@ export type PageSectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   imageUrl?: boolean
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["pageSection"]>
@@ -583,6 +607,7 @@ export type PageSectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   imageUrl?: boolean
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["pageSection"]>
@@ -599,11 +624,12 @@ export type PageSectionSelectScalar = {
   imageUrl?: boolean
   isVisible?: boolean
   isLocked?: boolean
+  showInNav?: boolean
   order?: boolean
   updatedAt?: boolean
 }
 
-export type PageSectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "titleZh" | "titleEn" | "subtitleZh" | "subtitleEn" | "contentZh" | "contentEn" | "imageUrl" | "isVisible" | "isLocked" | "order" | "updatedAt", ExtArgs["result"]["pageSection"]>
+export type PageSectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "titleZh" | "titleEn" | "subtitleZh" | "subtitleEn" | "contentZh" | "contentEn" | "imageUrl" | "isVisible" | "isLocked" | "showInNav" | "order" | "updatedAt", ExtArgs["result"]["pageSection"]>
 
 export type $PageSectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PageSection"
@@ -620,6 +646,7 @@ export type $PageSectionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     imageUrl: string | null
     isVisible: boolean
     isLocked: boolean
+    showInNav: boolean
     order: number
     updatedAt: Date
   }, ExtArgs["result"]["pageSection"]>
@@ -1056,6 +1083,7 @@ export interface PageSectionFieldRefs {
   readonly imageUrl: Prisma.FieldRef<"PageSection", 'String'>
   readonly isVisible: Prisma.FieldRef<"PageSection", 'Boolean'>
   readonly isLocked: Prisma.FieldRef<"PageSection", 'Boolean'>
+  readonly showInNav: Prisma.FieldRef<"PageSection", 'Boolean'>
   readonly order: Prisma.FieldRef<"PageSection", 'Int'>
   readonly updatedAt: Prisma.FieldRef<"PageSection", 'DateTime'>
 }

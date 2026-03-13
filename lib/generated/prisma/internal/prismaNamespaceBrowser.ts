@@ -102,6 +102,7 @@ export const PageSectionScalarFieldEnum = {
   imageUrl: 'imageUrl',
   isVisible: 'isVisible',
   isLocked: 'isLocked',
+  showInNav: 'showInNav',
   order: 'order',
   updatedAt: 'updatedAt'
 } as const

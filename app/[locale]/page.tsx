@@ -5,18 +5,17 @@ import HeroesGallery from "@/components/website/HeroesGallery";
 import WorldSection from "@/components/website/WorldSection";
 import NewsSection from "@/components/website/NewsSection";
 import DownloadSection from "@/components/website/DownloadSection";
-import CustomSection from "@/components/website/CustomSection";
+import CustomSectionBlock from "@/components/website/CustomSectionBlock";
 import Footer from "@/components/website/Footer";
 import { prisma } from "@/lib/db";
 import { toTraditional } from "@/lib/opencc";
 
-// System section keys that have dedicated components — excluded from custom rendering
-const SYSTEM_SECTION_KEYS = new Set([
+// System section keys that have dedicated components
+const SYSTEM_KEYS = new Set([
   "hero", "features", "heroes_gallery", "world", "news", "download",
   "support_privacy", "support_terms", "support_contact", "support_faq",
 ]);
 
-// Always fetch fresh data — no static caching
 export const dynamic = "force-dynamic";
 
 export default async function HomePage({
@@ -26,8 +25,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
 
-  // Fetch live data from the database in parallel
-  const [heroes, news, allSettings, customSections] = await Promise.all([
+  const [heroes, news, allSettings, allSections, navItems] = await Promise.all([
     prisma.hero.findMany({
       where: { isVisible: true },
       orderBy: { order: "asc" },
@@ -38,16 +36,17 @@ export default async function HomePage({
       take: 3,
     }),
     prisma.siteSetting.findMany(),
+    // Fetch ALL visible sections in DB order — used to determine render order
     prisma.pageSection.findMany({
       where: { isVisible: true },
       orderBy: { order: "asc" },
     }),
+    // DB-managed nav items
+    prisma.navItem.findMany({
+      where: { isVisible: true },
+      orderBy: { order: "asc" },
+    }),
   ]);
-
-  // Filter out system sections — only keep user-created custom sections
-  const userSections = customSections.filter(
-    (s) => !SYSTEM_SECTION_KEYS.has(s.key)
-  );
 
   const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
 
@@ -67,8 +66,11 @@ export default async function HomePage({
     telegram: gs("telegram_url") || undefined,
   };
 
-  // Pre-convert Simplified → Traditional for zh-TW so the client NewsSection
-  // component receives already-converted text in its titleZh / excerptZh props
+  // Custom nav items from sections with showInNav=true (non-system)
+  const customNavSections = allSections.filter(
+    (s) => !SYSTEM_KEYS.has(s.key) && s.showInNav
+  );
+
   const convertedNews =
     locale === "zh-TW"
       ? news.map((n) => ({
@@ -78,30 +80,67 @@ export default async function HomePage({
         }))
       : news;
 
+  // Render sections in DB order
+  // System sections use fixed components; custom sections use CustomSectionBlock
+  const renderedSections = allSections.map((section) => {
+    switch (section.key) {
+      case "hero":
+        return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} />;
+      case "features":
+        return <FeaturesSection key="features" locale={locale} />;
+      case "heroes_gallery":
+        return <HeroesGallery key="heroes_gallery" locale={locale} heroes={heroes} />;
+      case "world":
+        return <WorldSection key="world" locale={locale} />;
+      case "news":
+        return <NewsSection key="news" locale={locale} news={convertedNews} />;
+      case "download":
+        return <DownloadSection key="download" locale={locale} iosLink={iosLink} androidLink={androidLink} />;
+      default:
+        // Skip support page sections — they only render on /support
+        if (section.key.startsWith("support_")) return null;
+        // Render custom user-added sections
+        return (
+          <CustomSectionBlock
+            key={section.key}
+            sectionKey={section.key}
+            locale={locale}
+            titleZh={section.titleZh}
+            titleEn={section.titleEn}
+            subtitleZh={section.subtitleZh}
+            subtitleEn={section.subtitleEn}
+            contentZh={section.contentZh}
+            contentEn={section.contentEn}
+            imageUrl={section.imageUrl}
+          />
+        );
+    }
+  });
+
   return (
     <main className="bg-[#0A0806] min-h-screen">
-      <Navbar locale={locale} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
-      <HeroSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
-      <FeaturesSection locale={locale} />
-      <HeroesGallery locale={locale} heroes={heroes} />
-      <WorldSection locale={locale} />
-      <NewsSection locale={locale} news={convertedNews} />
-      {/* Custom sections added from admin — rendered after news, before download */}
-      {userSections.map((section) => (
-        <CustomSection
-          key={section.key}
-          locale={locale}
-          titleZh={section.titleZh ?? undefined}
-          titleEn={section.titleEn ?? undefined}
-          subtitleZh={section.subtitleZh ?? undefined}
-          subtitleEn={section.subtitleEn ?? undefined}
-          contentZh={section.contentZh ?? undefined}
-          contentEn={section.contentEn ?? undefined}
-          imageUrl={section.imageUrl ?? undefined}
-        />
-      ))}
-      <DownloadSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
-      <Footer locale={locale} iosLink={iosLink} androidLink={androidLink} socialLinks={socialLinks} logoUrl={logoUrl} gameNameZh={gameNameZh} gameNameEn={gameNameEn} />
+      <Navbar
+        locale={locale}
+        logoUrl={logoUrl}
+        gameNameZh={gameNameZh}
+        gameNameEn={gameNameEn}
+        navItems={navItems}
+        customNavSections={customNavSections.map((s) => ({
+          key: s.key,
+          labelZh: s.titleZh || s.key,
+          labelEn: s.titleEn || s.key,
+        }))}
+      />
+      {renderedSections}
+      <Footer
+        locale={locale}
+        iosLink={iosLink}
+        androidLink={androidLink}
+        socialLinks={socialLinks}
+        logoUrl={logoUrl}
+        gameNameZh={gameNameZh}
+        gameNameEn={gameNameEn}
+      />
     </main>
   );
 }

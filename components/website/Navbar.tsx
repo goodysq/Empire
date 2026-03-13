@@ -10,11 +10,14 @@ interface NavbarProps {
   logoUrl?: string;
   gameNameZh?: string;
   gameNameEn?: string;
+  navItems?: { id: string; labelZh: string; labelEn: string; href: string }[];
+  customNavSections?: { key: string; labelZh: string; labelEn: string }[];
 }
 
-const navLinks = [
+// Fallback static links used only when DB has no nav items
+const fallbackNavLinks = [
   { labelZh: "英雄", labelEn: "Heroes", href: "#heroes" },
-  { labelZh: "世界观", labelEn: "World", href: "#world" },
+  { labelZh: "文明", labelEn: "Civilizations", href: "#world" },
   { labelZh: "资讯", labelEn: "News", href: "#news" },
   { labelZh: "下载", labelEn: "Download", href: "#download" },
 ];
@@ -29,10 +32,6 @@ function getLabel(locale: string) {
   return LOCALES.find((l) => l.code === locale)?.short ?? "中";
 }
 
-function getNavLabel(locale: string, link: { labelZh: string; labelEn: string }) {
-  if (locale === "en") return link.labelEn;
-  return link.labelZh;
-}
 
 function getDownloadLabel(locale: string) {
   if (locale === "en") return "Download";
@@ -40,7 +39,7 @@ function getDownloadLabel(locale: string) {
   return "立即下载";
 }
 
-export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn }: NavbarProps) {
+export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn, navItems, customNavSections }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -75,14 +74,33 @@ export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn }: Navb
 
   const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
 
+  // Build the final nav link list:
+  // 1. DB-managed nav items (from admin → navigation)
+  // 2. + custom sections with showInNav=true appended at end
+  const activeNavLinks = navItems && navItems.length > 0 ? navItems : fallbackNavLinks;
+  const allNavLinks = [
+    ...activeNavLinks,
+    ...(customNavSections ?? []).map((s) => ({
+      id: s.key,
+      labelZh: s.labelZh,
+      labelEn: s.labelEn,
+      href: `#${s.key}`,
+    })),
+  ];
+
+  const getLabel2 = (link: { labelZh: string; labelEn: string }) =>
+    locale === "en" ? link.labelEn : link.labelZh;
+
   const scrollTo = (href: string) => {
     setMobileOpen(false);
-    if (!href.startsWith("#")) return;
+    if (!href.startsWith("#")) {
+      router.push(href);
+      return;
+    }
     if (isHome) {
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     } else {
-      // Navigate to home page with the hash — browser will scroll automatically
       router.push(`/${locale}${href}`);
     }
   };
@@ -126,13 +144,13 @@ export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn }: Navb
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {allNavLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
                 className="text-[#F5EDD5]/80 hover:text-[#E8C96A] transition-colors text-sm font-medium tracking-wide uppercase cursor-pointer"
               >
-                {getNavLabel(locale, link)}
+                {getLabel2(link)}
               </button>
             ))}
           </div>
@@ -195,13 +213,13 @@ export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn }: Navb
         }`}
       >
         <div className="bg-[#0A0806]/98 backdrop-blur-md border-t border-[#C9A84C]/20 px-4 py-4 space-y-3">
-          {navLinks.map((link) => (
+          {allNavLinks.map((link) => (
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
               className="block w-full text-left text-[#F5EDD5]/80 hover:text-[#E8C96A] py-2 text-base font-medium transition-colors"
             >
-              {getNavLabel(locale, link)}
+              {getLabel2(link)}
             </button>
           ))}
 
