@@ -20,7 +20,7 @@ export default async function HomePage({
   const { locale } = await params;
 
   // Fetch live data from the database in parallel
-  const [heroes, news, dlSettings] = await Promise.all([
+  const [heroes, news, allSettings] = await Promise.all([
     prisma.hero.findMany({
       where: { isVisible: true },
       orderBy: { order: "asc" },
@@ -30,13 +30,30 @@ export default async function HomePage({
       orderBy: { publishedAt: "desc" },
       take: 3,
     }),
-    prisma.siteSetting.findMany({
-      where: { key: { in: ["ios_link", "android_link"] } },
-    }),
+    prisma.siteSetting.findMany(),
   ]);
 
-  const iosLink = dlSettings.find((s) => s.key === "ios_link")?.value ?? "";
-  const androidLink = dlSettings.find((s) => s.key === "android_link")?.value ?? "";
+  const gs = (key: string) => allSettings.find((s) => s.key === key)?.value ?? "";
+
+  const iosLink = gs("ios_link");
+  const androidLink = gs("android_link");
+
+  const socialLinks = {
+    weibo: gs("weibo_url") || undefined,
+    wechat: gs("wechat_id") || undefined,
+    tiktok: gs("tiktok_url") || undefined,
+    youtube: gs("youtube_url") || undefined,
+    twitter: gs("twitter_url") || undefined,
+    discord: gs("discord_url") || undefined,
+    telegram: gs("telegram_url") || undefined,
+  };
+
+  const supportLinks = {
+    privacy: gs("privacy_url") || undefined,
+    terms: gs("terms_url") || undefined,
+    contact: gs("contact_url") || undefined,
+    faq: gs("faq_url") || undefined,
+  };
 
   // Pre-convert Simplified → Traditional for zh-TW so the client NewsSection
   // component receives already-converted text in its titleZh / excerptZh props
@@ -58,7 +75,7 @@ export default async function HomePage({
       <WorldSection locale={locale} />
       <NewsSection locale={locale} news={convertedNews} />
       <DownloadSection locale={locale} iosLink={iosLink} androidLink={androidLink} />
-      <Footer locale={locale} iosLink={iosLink} androidLink={androidLink} />
+      <Footer locale={locale} iosLink={iosLink} androidLink={androidLink} socialLinks={socialLinks} supportLinks={supportLinks} />
     </main>
   );
 }

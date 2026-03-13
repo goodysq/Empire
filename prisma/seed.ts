@@ -57,7 +57,7 @@ async function main() {
     { key: "features", titleZh: "游戏特色", titleEn: "Game Features", subtitleZh: "五大核心优势，打造极致帝国体验", subtitleEn: "Five core advantages for the ultimate empire experience" },
     { key: "heroes_gallery", titleZh: "传奇英雄", titleEn: "Legendary Heroes", subtitleZh: "跨越时空，群雄荟萃", subtitleEn: "Across Time, United in Glory" },
     { key: "world", titleZh: "联盟世界", titleEn: "Alliance World", subtitleZh: "四大文明圈，史诗战场", subtitleEn: "Four Civilizations, Epic Battlefields" },
-    { key: "news", titleZh: "最新资讯", titleEn: "Latest News", subtitleZh: "帝国动态，实时更新", subtitleEn: "Empire Updates, Real-time Information" },
+    { key: "news", titleZh: "最新资讯", titleEn: "Latest News", subtitleZh: "精彩内容，随时掌握", subtitleEn: "Stay Updated, Stay Ahead" },
     { key: "download", titleZh: "立即开始征途", titleEn: "Begin Your Journey", subtitleZh: "加入全球数百万玩家", subtitleEn: "Join millions of players worldwide" },
   ];
 
@@ -69,7 +69,7 @@ async function main() {
   // 4. Nav items
   const navItems = [
     { labelZh: "英雄", labelEn: "Heroes", href: "#heroes", order: 1 },
-    { labelZh: "世界观", labelEn: "World", href: "#world", order: 2 },
+    { labelZh: "文明", labelEn: "Civilizations", href: "#world", order: 2 },
     { labelZh: "资讯", labelEn: "News", href: "#news", order: 3 },
     { labelZh: "下载", labelEn: "Download", href: "#download", order: 4 },
   ];
@@ -89,9 +89,16 @@ async function main() {
     { key: "ios_link", value: "https://apps.apple.com", labelZh: "App Store 链接", group: "download" },
     { key: "android_link", value: "https://play.google.com", labelZh: "Google Play 链接", group: "download" },
     { key: "weibo_url", value: "", labelZh: "微博", group: "social" },
-    { key: "wechat_id", value: "", labelZh: "微信公众号", group: "social" },
-    { key: "tiktok_url", value: "", labelZh: "抖音", group: "social" },
+    { key: "wechat_id", value: "", labelZh: "微信公众号链接", group: "social" },
+    { key: "tiktok_url", value: "", labelZh: "抖音/TikTok", group: "social" },
     { key: "youtube_url", value: "", labelZh: "YouTube", group: "social" },
+    { key: "twitter_url", value: "", labelZh: "Twitter/X", group: "social" },
+    { key: "discord_url", value: "", labelZh: "Discord", group: "social" },
+    { key: "telegram_url", value: "", labelZh: "Telegram", group: "social" },
+    { key: "privacy_url", value: "", labelZh: "隐私政策链接", group: "links" },
+    { key: "terms_url", value: "", labelZh: "用户协议链接", group: "links" },
+    { key: "contact_url", value: "", labelZh: "联系我们链接", group: "links" },
+    { key: "faq_url", value: "", labelZh: "常见问题链接", group: "links" },
     { key: "seo_title_zh", value: "帝国纪元 - 史诗策略手游", labelZh: "SEO 标题", group: "seo" },
     { key: "seo_title_en", value: "Empire Chronicles - Epic Strategy Game", labelEn: "SEO Title", group: "seo" },
   ];
