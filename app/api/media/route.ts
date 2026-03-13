@@ -38,7 +38,12 @@ export async function POST(req: NextRequest) {
               folder: "game-website",
             },
             (error, result) => {
-              if (error || !result) return reject(error);
+              if (error || !result) {
+                const msg = error
+                  ? (error.message ?? JSON.stringify(error))
+                  : "No result from Cloudinary";
+                return reject(new Error(msg));
+              }
               resolve(result as { secure_url: string; public_id: string });
             }
           )
@@ -57,7 +62,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(mediaFile, { status: 201 });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
+    const message = err instanceof Error
+      ? err.message
+      : typeof err === "object"
+        ? JSON.stringify(err)
+        : String(err);
     console.error("[media upload error]", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
