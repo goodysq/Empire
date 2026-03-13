@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Save, ChevronDown, ChevronUp, Plus, Trash2,
-  Lock, Unlock, GripVertical, X, Navigation,
+  Lock, Unlock, GripVertical, X, Navigation, Eye, EyeOff,
 } from "lucide-react";
 
 interface PageSection {
@@ -184,6 +184,23 @@ export default function SectionsAdminPage() {
     if (expanded === key) setExpanded(null);
   };
 
+  const handleToggleVisible = async (section: PageSection) => {
+    const newVisible = !section.isVisible;
+    // Update local state immediately for snappy feedback
+    setSections((prev) =>
+      prev.map((s) => s.key === section.key ? { ...s, isVisible: newVisible } : s)
+    );
+    setLocalData((prev) => ({
+      ...prev,
+      [section.key]: { ...prev[section.key], isVisible: newVisible },
+    }));
+    await fetch(`/api/sections/${section.key}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...localData[section.key], isVisible: newVisible }),
+    });
+  };
+
   const handleToggleLock = async (section: PageSection) => {
     await fetch(`/api/sections/${section.key}`, {
       method: "PUT",
@@ -246,10 +263,11 @@ export default function SectionsAdminPage() {
                 onDragOver={(e) => handleDragOver(e, section.key)}
                 onDrop={(e) => handleDrop(e, section.key)}
                 onDragEnd={handleDragEnd}
-                className={`bg-[#1A1D26] border rounded-xl overflow-hidden transition-all ${
-                  isDraggingThis ? "opacity-40 scale-[0.98] border-[#C9A84C]/50"
-                    : isDragTarget ? "border-[#C9A84C] ring-1 ring-[#C9A84C]/30"
-                    : "border-gray-700/50"
+                className={`border rounded-xl overflow-hidden transition-all ${
+                  isDraggingThis ? "opacity-40 scale-[0.98] border-[#C9A84C]/50 bg-[#1A1D26]"
+                    : isDragTarget ? "border-[#C9A84C] ring-1 ring-[#C9A84C]/30 bg-[#1A1D26]"
+                    : section.isVisible ? "bg-[#1A1D26] border-gray-700/50"
+                    : "bg-[#14161e] border-gray-700/30 opacity-60"
                 }`}
               >
                 {/* Row header */}
@@ -306,6 +324,18 @@ export default function SectionsAdminPage() {
 
                   {/* Action buttons */}
                   <div className="flex items-center gap-1 flex-shrink-0">
+                    {/* Visibility toggle */}
+                    <button
+                      onClick={() => handleToggleVisible(section)}
+                      className={`p-1.5 rounded transition-all ${
+                        section.isVisible
+                          ? "text-gray-400 hover:text-[#C9A84C] hover:bg-[#C9A84C]/10"
+                          : "text-gray-600 hover:text-green-400 hover:bg-green-400/10"
+                      }`}
+                      title={section.isVisible ? "点击隐藏" : "点击显示"}
+                    >
+                      {section.isVisible ? <Eye size={14} /> : <EyeOff size={14} />}
+                    </button>
                     <button
                       onClick={() => handleToggleLock(section)}
                       className={`p-1.5 rounded transition-all ${section.isLocked ? "text-orange-400 hover:text-orange-300 hover:bg-orange-400/10" : "text-gray-500 hover:text-gray-300 hover:bg-white/10"}`}
