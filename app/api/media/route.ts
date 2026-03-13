@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { put } from "@vercel/blob";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function GET() {
   const files = await prisma.mediaFile.findMany({
@@ -18,19 +24,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // Upload to Vercel Blob
-    const timestamp = Date.now();
-    const filename = `${timestamp}-${file.name.replace(/\s/g, "-")}`;
+    // Convert file to buffer
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
-    const blob = await put(filename, file, {
-      access: "public",
-      contentType: file.type,
-    });
+    // Upload to Cloudinary
+    const result = await new Promise<{ secure_url: string; public_id: string }>(
+      (resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            {
+              resource_type: "image",
+              folder: "game-website",
+            },
+            (error, result) => {
+              if (error || !result) return reject(error);
+              resolve(result as { secure_url: string; public_id: string });
+            }
+          )
+          .end(buffer);
+      }
+    );
 
     const mediaFile = await prisma.mediaFile.create({
       data: {
         filename: file.name,
-        url: blob.url,
+        url: result.secure_url,
         size: file.size,
         mimeType: file.type,
       },
