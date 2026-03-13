@@ -26,7 +26,7 @@ const systemSectionLabels: Record<string, string> = {
   hero: "首页 Hero",
   features: "特色功能",
   heroes_gallery: "英雄图鉴",
-  world: "世界观",
+  world: "文明",
   news: "最新资讯",
   guides: "攻略中心",
   download: "下载区域",
