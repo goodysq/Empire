@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { BookOpen, ArrowRight, Tag } from "lucide-react";
+import { loc } from "@/lib/loc";
 
 interface Guide {
   id: string;
@@ -89,7 +90,7 @@ function GuideCard({ guide, locale, index }: { guide: Guide; locale: string; ind
           </p>
         )}
         <div className="flex items-center gap-1.5 text-[#C9A84C] text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-1 group-hover:translate-y-0">
-          <span>{locale === "en" ? "Read Guide" : "查看攻略"}</span>
+          <span>{loc(locale, "查看攻略", "查看攻略", "Read Guide")}</span>
           <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
         </div>
       </div>
@@ -123,10 +124,10 @@ export default function GuidesSection({
   }, []);
 
   const isEn = locale === "en";
-  const title = isEn ? (titleEn || "Game Guides") : (titleZh || "攻略中心");
+  const title = isEn ? (titleEn || "Game Guides") : (titleZh || loc(locale, "攻略中心", "攻略中心", "Game Guides"));
   const subtitle = isEn
     ? (subtitleEn || "Master every aspect of the game")
-    : (subtitleZh || "从入门到精通，全面掌握游戏技巧");
+    : (subtitleZh || loc(locale, "从入门到精通，全面掌握游戏技巧", "從入門到精通，全面掌握遊戲技巧", "Master every aspect of the game"));
 
   const visibleGuides = guides.filter((g) => g.isVisible);
   if (visibleGuides.length === 0) return null;
@@ -148,7 +149,7 @@ export default function GuidesSection({
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#C9A84C]" />
             <span className="text-[#C9A84C] text-sm font-medium tracking-[0.3em] uppercase flex items-center gap-1.5">
               <BookOpen size={13} />
-              {isEn ? "Guides" : "游戏攻略"}
+              {loc(locale, "游戏攻略", "遊戲攻略", "Guides")}
             </span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#C9A84C]" />
           </div>

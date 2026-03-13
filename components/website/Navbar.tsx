@@ -132,9 +132,9 @@ export default function Navbar({ locale, logoUrl, gameNameZh, gameNameEn, navIte
             </div>
             <div>
               <div className="text-[#E8C96A] font-bold text-lg leading-none" style={{ fontFamily: "var(--font-cinzel)" }}>
-                {gameNameZh
-                  ? (locale === "zh-TW" ? gameNameZh : gameNameZh)
-                  : (locale === "zh-TW" ? "帝國紀元" : "帝国纪元")}
+                {locale === "en"
+                  ? (gameNameEn || "Empire Chronicles")
+                  : (gameNameZh || (locale === "zh-TW" ? "帝國紀元" : "帝国纪元"))}
               </div>
               <div className="text-[#B8A882] text-xs leading-none mt-0.5">
                 {gameNameEn || "Empire Chronicles"}

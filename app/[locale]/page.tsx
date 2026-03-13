@@ -46,7 +46,7 @@ export default async function HomePage({
   const iosLink = gs("ios_link");
   const androidLink = gs("android_link");
   const logoUrl = gs("logo_url");
-  const gameNameZh = gs("game_name_zh");
+  const gameNameZh = toTraditional(gs("game_name_zh"), locale);
   const gameNameEn = gs("game_name_en");
 
   const socialLinks = {
@@ -72,6 +72,16 @@ export default async function HomePage({
         }))
       : news;
 
+  const convertedGuides =
+    locale === "zh-TW"
+      ? guides.map((g) => ({
+          ...g,
+          titleZh: toTraditional(g.titleZh, locale),
+          excerptZh: toTraditional(g.excerptZh ?? "", locale),
+          category: toTraditional(g.category ?? "", locale),
+        }))
+      : guides;
+
   // All sections ordered by DB; system keys map to their components
   const renderedSections = allSections.map((section) => {
     switch (section.key) {
@@ -87,11 +97,11 @@ export default async function HomePage({
         return <NewsSection key="news" locale={locale} news={convertedNews} />;
       case "guides":
         // Only render if there are guides
-        return guides.length > 0 ? (
+        return convertedGuides.length > 0 ? (
           <GuidesSection
             key="guides"
             locale={locale}
-            guides={guides}
+            guides={convertedGuides}
             titleZh={guidesSection?.titleZh ?? undefined}
             titleEn={guidesSection?.titleEn ?? undefined}
             subtitleZh={guidesSection?.subtitleZh ?? undefined}
