@@ -15,7 +15,6 @@ const tabs = [
   { key: "general", label: "通用设置", icon: Globe },
   { key: "download", label: "下载链接", icon: Download },
   { key: "social", label: "社交媒体", icon: Share2 },
-  { key: "links", label: "支持链接", icon: Globe },
   { key: "seo", label: "SEO 设置", icon: Search },
 ];
 
@@ -79,12 +78,6 @@ export default function SettingsAdminPage() {
       { key: "tiktok_url", label: "抖音 / TikTok", placeholder: "https://..." },
       { key: "weibo_url", label: "微博", placeholder: "https://weibo.com/..." },
       { key: "wechat_id", label: "微信公众号链接", placeholder: "https://mp.weixin.qq.com/..." },
-    ],
-    links: [
-      { key: "privacy_url", label: "隐私政策链接", placeholder: "https://..." },
-      { key: "terms_url", label: "用户协议链接", placeholder: "https://..." },
-      { key: "contact_url", label: "联系我们链接", placeholder: "https://..." },
-      { key: "faq_url", label: "常见问题链接", placeholder: "https://..." },
     ],
     seo: [
       { key: "seo_title_zh", label: "SEO 标题（中文）", placeholder: "帝国纪元 - 史诗策略手游" },
