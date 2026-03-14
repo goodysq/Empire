@@ -8,6 +8,7 @@ import DownloadSection from "@/components/website/DownloadSection";
 import GuidesSection from "@/components/website/GuidesSection";
 import ReservationSection from "@/components/website/ReservationSection";
 import CustomSectionBlock from "@/components/website/CustomSectionBlock";
+import VideoSection from "@/components/website/VideoSection";
 import Footer from "@/components/website/Footer";
 import { prisma } from "@/lib/db";
 import { toTraditional } from "@/lib/opencc";
@@ -16,7 +17,7 @@ import type { SiteSetting, PageSection, News, Guide } from "@/lib/generated/pris
 // System section keys — have dedicated components
 const SYSTEM_KEYS = new Set([
   "hero", "features", "heroes_gallery", "world", "news", "guides", "download",
-  "reservation",
+  "reservation", "video",
   "support_privacy", "support_terms", "support_contact", "support_faq",
 ]);
 
@@ -51,6 +52,7 @@ export default async function HomePage({
   const logoUrl = gs("logo_url");
   const gameNameZh = toTraditional(gs("game_name_zh"), locale);
   const gameNameEn = gs("game_name_en");
+  const videoUrl = gs("video_url") || undefined;
 
   const socialLinks = {
     weibo: gs("weibo_url") || undefined,
@@ -93,6 +95,18 @@ export default async function HomePage({
         return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} gameNameZh={gameNameZh} gameNameEn={gameNameEn} heroes={heroes} />;
       case "features":
         return <FeaturesSection key="features" locale={locale} />;
+      case "video":
+        return (
+          <VideoSection
+            key="video"
+            locale={locale}
+            videoUrl={videoUrl}
+            titleZh={toTraditional(section.titleZh ?? "", locale)}
+            titleEn={section.titleEn ?? undefined}
+            subtitleZh={toTraditional(section.subtitleZh ?? "", locale)}
+            subtitleEn={section.subtitleEn ?? undefined}
+          />
+        );
       case "heroes_gallery":
         return <HeroesGallery key="heroes_gallery" locale={locale} heroes={heroes} />;
       case "world":
