@@ -109,6 +109,14 @@ model Guide {
   updatedAt  DateTime @updatedAt
 }
 
+model Reservation {
+  id        String   @id @default(cuid())
+  email     String   @unique @db.VarChar(254)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
 model AuditLog {
   id         String   @id @default(cuid())
   userId     String
