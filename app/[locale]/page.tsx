@@ -6,6 +6,7 @@ import WorldSection from "@/components/website/WorldSection";
 import NewsSection from "@/components/website/NewsSection";
 import DownloadSection from "@/components/website/DownloadSection";
 import GuidesSection from "@/components/website/GuidesSection";
+import ReservationSection from "@/components/website/ReservationSection";
 import CustomSectionBlock from "@/components/website/CustomSectionBlock";
 import Footer from "@/components/website/Footer";
 import { prisma } from "@/lib/db";
@@ -85,6 +86,7 @@ export default async function HomePage({
 
   // All sections ordered by DB; system keys map to their components
   const renderedSections = allSections.map((section: PageSection) => {
+
     switch (section.key) {
       case "hero":
         return <HeroSection key="hero" locale={locale} iosLink={iosLink} androidLink={androidLink} gameNameZh={gameNameZh} gameNameEn={gameNameEn} heroes={heroes} />;
@@ -130,6 +132,12 @@ export default async function HomePage({
     }
   });
 
+  // Insert ReservationSection after the "news" section (hardcoded, not DB-driven)
+  const newsIdx = allSections.findIndex((s: PageSection) => s.key === "news");
+  const insertAt = newsIdx >= 0 ? newsIdx + 1 : renderedSections.length;
+  const sectionsBeforeReservation = renderedSections.slice(0, insertAt);
+  const sectionsAfterReservation = renderedSections.slice(insertAt);
+
   return (
     <main className="bg-[#0A0806] min-h-screen">
       <Navbar
@@ -144,7 +152,9 @@ export default async function HomePage({
           labelEn: s.titleEn || s.key,
         }))}
       />
-      {renderedSections}
+      {sectionsBeforeReservation}
+      <ReservationSection locale={locale} />
+      {sectionsAfterReservation}
       <Footer
         locale={locale}
         iosLink={iosLink}
