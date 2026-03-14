@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/api-auth";
+import { sanitize } from "@/lib/sanitize";
+import { logAudit } from "@/lib/audit";
 
 export async function GET(
   req: NextRequest,
@@ -21,7 +23,7 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { error } = await requireAuth();
+  const { session, error } = await requireAuth();
   if (error) return error;
 
   try {
@@ -35,8 +37,8 @@ export async function PUT(
         titleEn: body.titleEn,
         excerptZh: body.excerptZh,
         excerptEn: body.excerptEn,
-        contentZh: body.contentZh,
-        contentEn: body.contentEn,
+        contentZh: body.contentZh !== undefined ? sanitize(body.contentZh) : undefined,
+        contentEn: body.contentEn !== undefined ? sanitize(body.contentEn) : undefined,
         coverImage: body.coverImage,
         isPublished: body.isPublished,
         publishedAt: body.publishedAt
@@ -47,6 +49,7 @@ export async function PUT(
       },
     });
 
+    await logAudit(session!, "update", "news", id, news.titleZh);
     revalidatePath("/zh");
     revalidatePath("/en");
     return NextResponse.json(news);
@@ -59,11 +62,12 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { error } = await requireAuth();
+  const { session, error } = await requireAuth();
   if (error) return error;
 
   try {
     const { id } = await params;
+    await logAudit(session!, "delete", "news", id);
     await prisma.news.delete({ where: { id } });
     revalidatePath("/zh");
     revalidatePath("/en");

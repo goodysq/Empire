@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import bcrypt from "bcryptjs";
 import { requireAuth, requireAdmin, getSessionUser } from "@/lib/api-auth";
+import { logAudit } from "@/lib/audit";
 
 export async function PUT(
   req: NextRequest,
@@ -57,6 +58,8 @@ export async function PUT(
       },
     });
 
+    const details = body.password ? "password changed" : Object.keys(updateData).join(", ");
+    await logAudit(session!, "update", "account", id, details);
     return NextResponse.json(account);
   } catch {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
@@ -78,6 +81,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Cannot delete your own account" }, { status: 400 });
     }
 
+    await logAudit(session!, "delete", "account", id);
     await prisma.adminUser.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch {

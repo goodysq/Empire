@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/api-auth";
+import { sanitize } from "@/lib/sanitize";
 
 export async function GET(
   req: NextRequest,
@@ -34,8 +35,8 @@ export async function PUT(
         titleEn: body.titleEn,
         excerptZh: body.excerptZh,
         excerptEn: body.excerptEn,
-        contentZh: body.contentZh,
-        contentEn: body.contentEn,
+        contentZh: body.contentZh !== undefined ? sanitize(body.contentZh) : undefined,
+        contentEn: body.contentEn !== undefined ? sanitize(body.contentEn) : undefined,
         coverImage: body.coverImage,
         category: body.category,
         isVisible: body.isVisible ?? true,

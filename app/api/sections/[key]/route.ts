@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/api-auth";
+import { sanitize } from "@/lib/sanitize";
 
 export async function PUT(
   req: NextRequest,
@@ -20,8 +21,8 @@ export async function PUT(
         titleEn: body.titleEn,
         subtitleZh: body.subtitleZh,
         subtitleEn: body.subtitleEn,
-        contentZh: body.contentZh,
-        contentEn: body.contentEn,
+        contentZh: body.contentZh !== undefined ? sanitize(body.contentZh) : undefined,
+        contentEn: body.contentEn !== undefined ? sanitize(body.contentEn) : undefined,
         imageUrl: body.imageUrl,
         isVisible: body.isVisible ?? true,
         isLocked: body.isLocked ?? false,
@@ -34,8 +35,8 @@ export async function PUT(
         titleEn: body.titleEn,
         subtitleZh: body.subtitleZh,
         subtitleEn: body.subtitleEn,
-        contentZh: body.contentZh,
-        contentEn: body.contentEn,
+        contentZh: sanitize(body.contentZh),
+        contentEn: sanitize(body.contentEn),
         imageUrl: body.imageUrl,
         isVisible: body.isVisible ?? true,
         isLocked: body.isLocked ?? false,

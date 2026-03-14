@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { requireAuth } from "@/lib/api-auth";
+import { sanitize } from "@/lib/sanitize";
 
 export async function GET(req: NextRequest) {
   try {
@@ -44,8 +45,8 @@ export async function POST(req: NextRequest) {
         titleEn: body.titleEn ?? "",
         excerptZh: body.excerptZh ?? "",
         excerptEn: body.excerptEn ?? "",
-        contentZh: body.contentZh ?? "",
-        contentEn: body.contentEn ?? "",
+        contentZh: sanitize(body.contentZh),
+        contentEn: sanitize(body.contentEn),
         coverImage: body.coverImage ?? "",
         category: body.category ?? "",
         isVisible: body.isVisible ?? true,

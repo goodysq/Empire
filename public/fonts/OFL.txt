@@ -1,0 +1,14 @@
+Copyright 2010 The Cinzel Project Authors (https://github.com/google/fonts/tree/main/ofl/cinzel)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+The SIL Open Font License allows:
+- Free use, study, modification, and redistribution of the font
+- Embedding in documents and applications
+- Commercial use
+
+Conditions:
+- Modified versions must use a different name
+- The font cannot be sold by itself
+
+Full license text: https://openfontlicense.org

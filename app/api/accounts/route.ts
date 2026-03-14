@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import bcrypt from "bcryptjs";
 import { requireAuth, requireAdmin } from "@/lib/api-auth";
+import { logAudit } from "@/lib/audit";
 
 export async function GET() {
   const { error } = await requireAuth();
@@ -27,7 +28,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   // Only admins can create new accounts
-  const { error } = await requireAdmin();
+  const { session, error } = await requireAdmin();
   if (error) return error;
 
   try {
@@ -54,6 +55,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await logAudit(session!, "create", "account", account.id, account.email);
     return NextResponse.json(
       { id: account.id, name: account.name, email: account.email, role: account.role },
       { status: 201 }

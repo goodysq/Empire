@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/api-auth";
 
+function isValidHref(href: string): boolean {
+  if (href.startsWith("/")) return true; // Relative path
+  try {
+    const url = new URL(href);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export async function GET() {
   try {
     const items = await prisma.navItem.findMany({
@@ -22,6 +32,10 @@ export async function POST(req: NextRequest) {
 
     if (!body.labelZh || !body.href) {
       return NextResponse.json({ error: "labelZh and href are required" }, { status: 400 });
+    }
+
+    if (!isValidHref(body.href)) {
+      return NextResponse.json({ error: "Invalid href: must be a relative path or http/https URL" }, { status: 400 });
     }
 
     const item = await prisma.navItem.create({
@@ -49,6 +63,10 @@ export async function PUT(req: NextRequest) {
 
     if (!body.id) {
       return NextResponse.json({ error: "id is required" }, { status: 400 });
+    }
+
+    if (body.href !== undefined && !isValidHref(body.href)) {
+      return NextResponse.json({ error: "Invalid href: must be a relative path or http/https URL" }, { status: 400 });
     }
 
     const item = await prisma.navItem.update({

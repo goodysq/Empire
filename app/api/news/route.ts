@@ -3,6 +3,8 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { requireAuth } from "@/lib/api-auth";
+import { sanitize } from "@/lib/sanitize";
+import { logAudit } from "@/lib/audit";
 
 export async function GET(req: NextRequest) {
   try {
@@ -30,7 +32,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { error } = await requireAuth();
+  const { session, error } = await requireAuth();
   if (error) return error;
 
   try {
@@ -46,14 +48,15 @@ export async function POST(req: NextRequest) {
         titleEn: body.titleEn,
         excerptZh: body.excerptZh,
         excerptEn: body.excerptEn,
-        contentZh: body.contentZh || "",
-        contentEn: body.contentEn,
+        contentZh: sanitize(body.contentZh),
+        contentEn: sanitize(body.contentEn),
         coverImage: body.coverImage,
         isPublished: body.isPublished ?? false,
         publishedAt: body.publishedAt ? new Date(body.publishedAt) : null,
       },
     });
 
+    await logAudit(session!, "create", "news", news.id, news.titleZh);
     revalidatePath("/zh");
     revalidatePath("/en");
     return NextResponse.json(news, { status: 201 });

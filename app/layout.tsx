@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Cinzel, Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,10 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const cinzel = Cinzel({
+const cinzel = localFont({
+  src: [
+    { path: "../public/fonts/Cinzel-Regular.ttf", weight: "400" },
+    { path: "../public/fonts/Cinzel-Bold.ttf", weight: "700" },
+    { path: "../public/fonts/Cinzel-Black.ttf", weight: "900" },
+  ],
   variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
 });
 
 export const metadata: Metadata = {

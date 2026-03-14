@@ -125,10 +125,6 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Hint */}
-          <p className="text-center text-gray-500 text-xs mt-6">
-            Default: admin@empire.com / Admin123456
-          </p>
         </div>
       </div>
     </div>
