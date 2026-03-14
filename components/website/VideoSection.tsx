@@ -23,6 +23,7 @@ export default function VideoSection({
 }: VideoSectionProps) {
   const [playing, setPlaying] = useState(false);
   const hasVideo = Boolean(videoUrl);
+  const trailerLabel = loc(locale, "游戏宣传片", "遊戲宣傳片", "Game Trailer");
 
   return (
     <section id="video" className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -53,14 +54,17 @@ export default function VideoSection({
           {playing && videoUrl ? (
             <iframe
               src={videoUrl}
-              title="Game Trailer"
+              title={trailerLabel}
               className="absolute inset-0 w-full h-full"
               allowFullScreen
               allow="autoplay; fullscreen"
+              sandbox="allow-scripts allow-same-origin allow-presentation allow-fullscreen"
             />
           ) : (
             <button
               onClick={() => { if (hasVideo) setPlaying(true); }}
+              tabIndex={hasVideo ? 0 : -1}
+              aria-hidden={!hasVideo}
               className={`absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-4 transition-colors ${
                 hasVideo ? "cursor-pointer hover:bg-[#C9A84C]/5" : "cursor-default"
               }`}
