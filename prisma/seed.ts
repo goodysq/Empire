@@ -63,7 +63,7 @@ async function main() {
   ];
 
   for (const section of sections) {
-    await prisma.pageSection.upsert({ where: { key: section.key }, update: {}, create: section });
+    await prisma.pageSection.upsert({ where: { key: section.key }, update: { order: section.order }, create: section });
   }
   console.log(`✅ ${sections.length} page sections created`);
 
