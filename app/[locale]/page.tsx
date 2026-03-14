@@ -16,6 +16,7 @@ import type { SiteSetting, PageSection, News, Guide } from "@/lib/generated/pris
 // System section keys — have dedicated components
 const SYSTEM_KEYS = new Set([
   "hero", "features", "heroes_gallery", "world", "news", "guides", "download",
+  "reservation",
   "support_privacy", "support_terms", "support_contact", "support_faq",
 ]);
 
@@ -111,6 +112,8 @@ export default async function HomePage({
             subtitleEn={guidesSection?.subtitleEn ?? undefined}
           />
         ) : null;
+      case "reservation":
+        return <ReservationSection key="reservation" locale={locale} />;
       case "download":
         return <DownloadSection key="download" locale={locale} iosLink={iosLink} androidLink={androidLink} />;
       default:
@@ -132,12 +135,6 @@ export default async function HomePage({
     }
   });
 
-  // Insert ReservationSection after the "news" section (hardcoded, not DB-driven)
-  const newsIdx = allSections.findIndex((s: PageSection) => s.key === "news");
-  const insertAt = newsIdx >= 0 ? newsIdx + 1 : renderedSections.length;
-  const sectionsBeforeReservation = renderedSections.slice(0, insertAt);
-  const sectionsAfterReservation = renderedSections.slice(insertAt);
-
   return (
     <main className="bg-[#0A0806] min-h-screen">
       <Navbar
@@ -152,9 +149,7 @@ export default async function HomePage({
           labelEn: s.titleEn || s.key,
         }))}
       />
-      {sectionsBeforeReservation}
-      <ReservationSection locale={locale} />
-      {sectionsAfterReservation}
+      {renderedSections}
       <Footer
         locale={locale}
         iosLink={iosLink}

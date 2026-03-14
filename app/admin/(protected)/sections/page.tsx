@@ -29,6 +29,7 @@ const systemSectionLabels: Record<string, string> = {
   world: "文明",
   news: "最新资讯",
   guides: "攻略中心",
+  reservation: "预约公测",
   download: "下载区域",
 };
 
