@@ -53,12 +53,13 @@ async function main() {
 
   // 3. Page sections
   const sections = [
-    { key: "hero", titleZh: "帝国纪元", titleEn: "Empire Chronicles", subtitleZh: "纵横千古，逐鹿天下", subtitleEn: "Command History. Conquer the World." },
-    { key: "features", titleZh: "游戏特色", titleEn: "Game Features", subtitleZh: "五大核心优势，打造极致帝国体验", subtitleEn: "Five core advantages for the ultimate empire experience" },
-    { key: "heroes_gallery", titleZh: "传奇英雄", titleEn: "Legendary Heroes", subtitleZh: "跨越时空，群雄荟萃", subtitleEn: "Across Time, United in Glory" },
-    { key: "world", titleZh: "联盟世界", titleEn: "Alliance World", subtitleZh: "四大文明圈，史诗战场", subtitleEn: "Four Civilizations, Epic Battlefields" },
-    { key: "news", titleZh: "最新资讯", titleEn: "Latest News", subtitleZh: "精彩内容，随时掌握", subtitleEn: "Stay Updated, Stay Ahead" },
-    { key: "download", titleZh: "立即开始征途", titleEn: "Begin Your Journey", subtitleZh: "加入全球数百万玩家", subtitleEn: "Join millions of players worldwide" },
+    { key: "hero",           titleZh: "帝国纪元",     titleEn: "Empire Chronicles",    subtitleZh: "纵横千古，逐鹿天下",             subtitleEn: "Command History. Conquer the World.",                    order: 10 },
+    { key: "features",       titleZh: "游戏特色",     titleEn: "Game Features",        subtitleZh: "五大核心优势，打造极致帝国体验",    subtitleEn: "Five core advantages for the ultimate empire experience", order: 20 },
+    { key: "video",          titleZh: "精彩视频",     titleEn: "Featured Video",       subtitleZh: "观看游戏宣传片",                 subtitleEn: "Watch the game trailer",                                 order: 25 },
+    { key: "heroes_gallery", titleZh: "传奇英雄",     titleEn: "Legendary Heroes",     subtitleZh: "跨越时空，群雄荟萃",             subtitleEn: "Across Time, United in Glory",                          order: 30 },
+    { key: "world",          titleZh: "联盟世界",     titleEn: "Alliance World",       subtitleZh: "四大文明圈，史诗战场",            subtitleEn: "Four Civilizations, Epic Battlefields",                  order: 40 },
+    { key: "news",           titleZh: "最新资讯",     titleEn: "Latest News",          subtitleZh: "精彩内容，随时掌握",             subtitleEn: "Stay Updated, Stay Ahead",                              order: 50 },
+    { key: "download",       titleZh: "立即开始征途", titleEn: "Begin Your Journey",   subtitleZh: "加入全球数百万玩家",             subtitleEn: "Join millions of players worldwide",                    order: 60 },
   ];
 
   for (const section of sections) {
@@ -101,6 +102,7 @@ async function main() {
     { key: "faq_url", value: "", labelZh: "常见问题链接", group: "links" },
     { key: "seo_title_zh", value: "帝国纪元 - 史诗策略手游", labelZh: "SEO 标题", group: "seo" },
     { key: "seo_title_en", value: "Empire Chronicles - Epic Strategy Game", labelEn: "SEO Title", group: "seo" },
+    { key: "video_url", value: "", labelZh: "游戏宣传视频链接（YouTube/Bilibili 嵌入地址）", labelEn: "Game Trailer Video URL (YouTube/Bilibili embed)", group: "general" },
   ];
 
   for (const setting of settings) {
