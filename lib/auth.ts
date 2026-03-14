@@ -26,6 +26,7 @@ function recordFailedAttempt(email: string): void {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  trustHost: true,
   callbacks: {
     ...authConfig.callbacks,
     async jwt({ token, user }) {
