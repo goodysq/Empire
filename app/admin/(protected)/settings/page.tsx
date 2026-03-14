@@ -64,6 +64,7 @@ export default function SettingsAdminPage() {
       { key: "site_tagline_zh", label: "网站标语（中文）", placeholder: "纵横千古，逐鹿天下" },
       { key: "site_tagline_en", label: "网站标语（英文）", placeholder: "Command History. Conquer the World." },
       { key: "contact_email", label: "联系邮箱", placeholder: "contact@empire.com", type: "email" },
+      { key: "video_url", label: "游戏宣传视频链接（YouTube/Bilibili 嵌入地址，如 https://www.youtube.com/embed/xxxxx）", placeholder: "https://www.youtube.com/embed/..." },
     ],
     download: [
       { key: "ios_link", label: "App Store 链接", placeholder: "https://apps.apple.com/..." },
